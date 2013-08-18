@@ -120,7 +120,7 @@ class Story():
         print 'Submitted by: %s' % self.submitter
         print 'Number of comments: %d' % self.num_comments
         print 'Link to comments: %s' % self.comments_link
-
+        
     
     def __repr__(self):
         """A string representation of the class object"""
