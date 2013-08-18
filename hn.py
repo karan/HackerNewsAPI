@@ -5,10 +5,13 @@ from urllib2 import urlopen
 
 from bs4 import BeautifulSoup
 
+
 BASE_URL = 'http://news.ycombinator.com'
+
 
 class HN():
     """The class that parses the HN page, and builds up all Story objects"""
+    
     
     def get_zipped_rows(self, soup):
         """Returns all 'tr' tag rows as a list of tuples. Each tuple is for
@@ -24,6 +27,7 @@ class HN():
         detail = [row for (i, row) in enumerate(rows) if (i % 2 != 0)]
 
         return zip(info, detail) # build a list of tuple for all post
+    
     
     def build_story(self, all_rows):
         """Builds and returns a complete Story object from
@@ -68,6 +72,7 @@ class HN():
             all_stories.append(story)
         return all_stories
     
+    
     def get_top_stories(self):
         """Returns a list of Story objects from the homepage
         of HN"""
@@ -75,6 +80,7 @@ class HN():
         soup = BeautifulSoup(content)
         all_rows = self.get_zipped_rows(soup)
         return self.build_story(all_rows)
+        
         
     def get_newest_stories(self):
         """Returns a list of Story objects from the newest page
@@ -85,8 +91,10 @@ class HN():
         return self.build_story(all_rows)
     
 
+
 class Story():
     """Story class represents one single story on HN"""
+    
     
     def __init__(self, rank, story_id, title, link, domain, points, submitter, 
                  num_comments, comments_link):
@@ -100,17 +108,19 @@ class Story():
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
 
+
     def print_story(self):
         """Print the details of a story"""
         print 'Rank: %d' % self.rank
         print 'Story ID: %d' % self.story_id
-        print 'Title: %s' % self.title
+        print 'Title: %s' % self.title.encode('cp850', errors='replace')
         print 'Link: %s' % self.link
         print 'Domain: %s' % self.domain
         print 'Points: %d' % self.points
         print 'Submitted by: %s' % self.submitter
         print 'Number of comments: %d' % self.num_comments
         print 'Link to comments: %s' % self.comments_link
+
     
     def __repr__(self):
         """A string representation of the class object"""
