@@ -34,10 +34,14 @@ class HN():
             #-- Get the into about a story --#
             info_cells = info.findAll('td') # split in 3 cells
             
-            rank = info_cells[0].string[:-1]
+            rank = int(info_cells[0].string[:-1])
             title = info_cells[2].find('a').string
             link = info_cells[2].find('a').get('href')
-            domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
+            try:
+                domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
+            except AttributeError:
+                # this is a self post
+                domain = ''
             #-- Get the into about a story --#
             
             #-- Get the detail about a story --#
@@ -45,9 +49,9 @@ class HN():
             detail_concern = detail_cell.contents # list of details we need, 5 count
             
             points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
-            submitter = detail_concern.contents[2].string
-            comment_tag = detail_concern.contents[4]
-            story_id = re.match(r'.*=(\d+)', comment_tag.get('href')).groups()[0]
+            submitter = detail_concern[2].string
+            comment_tag = detail_concern[4]
+            story_id = int(re.match(r'.*=(\d+)', comment_tag.get('href')).groups()[0])
             comments_link = '%s/item?id=%d' % (BASE_URL, story_id)
             comment_count = re.match(r'(\d+)\s.*', comment_tag.string)
             try:
@@ -70,7 +74,7 @@ class HN():
         content = urlopen(BASE_URL).read()
         soup = BeautifulSoup(content)
         all_rows = self.get_zipped_rows(soup)
-        return build_story(all_rows)
+        return self.build_story(all_rows)
         
     def get_newest_stories(self):
         """Returns a list of Story objects from the newest page
@@ -78,7 +82,7 @@ class HN():
         content = urlopen('%s/newest' % BASE_URL).read()
         soup = BeautifulSoup(content)
         all_rows = self.get_zipped_rows(soup)
-        return build_story(all_rows)
+        return self.build_story(all_rows)
     
 
 class Story():
@@ -100,13 +104,13 @@ class Story():
         """Print the details of a story"""
         print 'Rank: %d' % self.rank
         print 'Story ID: %d' % self.story_id
-        print 'Title: %d' % self.title
-        print 'Link: %d' % self.link
-        print 'Domain: %d' % self.domain
+        print 'Title: %s' % self.title
+        print 'Link: %s' % self.link
+        print 'Domain: %s' % self.domain
         print 'Points: %d' % self.points
-        print 'Submitted by: %d' % self.submitter
+        print 'Submitted by: %s' % self.submitter
         print 'Number of comments: %d' % self.num_comments
-        print 'Link to comments: %d' % self.comments_link
+        print 'Link to comments: %s' % self.comments_link
     
     def __repr__(self):
         """A string representation of the class object"""

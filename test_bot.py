@@ -4,4 +4,7 @@ from hn import HN
 
 hn = HN()
 
-print hn.get_top_stories()[:5]
+for story in hn.get_top_stories()[:5]:
+    print story.print_story()
+    print '*' * 40
+    print ''
