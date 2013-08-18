@@ -1,5 +1,11 @@
 #!/usr/bin/env python
+"""
+Unofficial Python API for Hacker News.
+Currently supports reading HN homepage and newest stories
+page only.
 
+@author: Karan Goel <karan@goel.im>
+"""
 import re
 from urllib2 import urlopen
 

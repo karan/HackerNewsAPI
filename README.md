@@ -1,7 +1,7 @@
 HackerNewsAPI
 =============
 
-Unofficial Python wrapper for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
+Unofficial Python API for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
 
 Dependencies
 ============
