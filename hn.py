@@ -70,7 +70,7 @@ class HN():
         content = urlopen(BASE_URL).read()
         soup = BeautifulSoup(content)
         all_rows = self.get_zipped_rows(soup)
-        return all_rows
+        return build_story(all_rows)
         
     def get_newest_stories(self):
         """Returns a list of Story objects from the newest page
@@ -78,6 +78,7 @@ class HN():
         content = urlopen('%s/newest' % BASE_URL).read()
         soup = BeautifulSoup(content)
         all_rows = self.get_zipped_rows(soup)
+        return build_story(all_rows)
     
 
 class Story():
