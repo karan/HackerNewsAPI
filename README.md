@@ -33,15 +33,15 @@ Story class represents one single story on HN
 
 #### Story details
 
-rank # the rank of story on the page
-story_id # the story's id
-title # the title of the story
-link # the url it points to (None for self posts)
-domain # the domain of the link (None for self posts)
-points # the points/karma on the story
-submitter # the user who submitted the story
-num_comments # the number of comments it has
-comments_link # the link to the comments page
+* **rank** - the rank of story on the page
+* **story_id** - the story's id
+* **title** - the title of the story
+* **link** - the url it points to (None for self posts)
+* **domain** - the domain of the link (None for self posts)
+* **points** - the points/karma on the story
+* **submitter** - the user who submitted the story
+* **num_comments** - the number of comments it has
+* **comments_link** - the link to the comments page
 
 Example
 ========
