@@ -2,12 +2,17 @@
 
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
 
+Installation
+============
+
+    $ pip install HackerNews
+
 Dependencies
 ============
 
 **Beautiful Soup**
 
-    $ pip install beautifulsoup
+    $ pip install beautifulsoup4
 
 Classes
 ==========
