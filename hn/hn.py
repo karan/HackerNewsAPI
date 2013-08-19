@@ -63,34 +63,45 @@ class HN():
             rank = int(info_cells[0].string[:-1])
             title = info_cells[2].find('a').string
             link = info_cells[2].find('a').get('href')
+            if link.find('http') is -1 :
+                link = '%s/%s' % (BASE_URL, link)
             try:
                 domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
             except AttributeError:
                 # this is a self post
-                domain = ''
+                domain = BASE_URL
             #-- Get the into about a story --#
             
             #-- Get the detail about a story --#
             detail_cell = detail.findAll('td')[1] # split in 2 cells, we need only second
             detail_concern = detail_cell.contents # list of details we need, 5 count
             
-            points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
-            submitter = detail_concern[2].string
-            comment_tag = detail_concern[4]
-            story_id = int(re.match(r'.*=(\d+)', comment_tag.get('href')).groups()[0])
-            comments_link = '%s/item?id=%d' % (BASE_URL, story_id)
-            comment_count = re.match(r'(\d+)\s.*', comment_tag.string)
-            try:
-                # regex matched, cast to int
-                num_comments = int(comment_count.groups()[0])
-            except AttributeError:
-                # did not match, assign 0
-                num_comments = 0
+            if re.match(r'^(\d+)\spoint.*', detail_concern[0].string) is not None:
+                points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
+                submitter = detail_concern[2].string
+                submitter_profile = '%s/%s' % (BASE_URL, detail_concern[2].get('href'))
+                comment_tag = detail_concern[4]
+                story_id = int(re.match(r'.*=(\d+)', comment_tag.get('href')).groups()[0])
+                comments_link = '%s/item?id=%d' % (BASE_URL, story_id)
+                comment_count = re.match(r'(\d+)\s.*', comment_tag.string)
+                try:
+                    # regex matched, cast to int
+                    num_comments = int(comment_count.groups()[0])
+                except AttributeError:
+                    # did not match, assign 0
+                    num_comments = 0
+            else: # this is a self post
+                points = 0
+                submitter = None
+                submitter_profile = None
+                comment_tag = None
+                story_id = int(re.match(r'.*=(\d+)', link).groups()[0])
+                comments_link = None
+                comment_count = 0
             #-- Get the detail about a story --#
-            
             story = Story(rank, story_id, title, link, domain, points, submitter, 
-                 num_comments, comments_link)
-            
+                 submitter_profile, num_comments, comments_link)
+
             all_stories.append(story)
         return all_stories
     
@@ -119,7 +130,7 @@ class Story():
     
     
     def __init__(self, rank, story_id, title, link, domain, points, submitter, 
-                 num_comments, comments_link):
+                 submitter_profile, num_comments, comments_link):
         self.rank = rank # the rank of story on the page
         self.story_id = story_id # the story's id
         self.title = title # the title of the story
@@ -127,6 +138,7 @@ class Story():
         self.domain = domain # the domain of the link (None for self posts)
         self.points = points # the points/karma on the story
         self.submitter = submitter # the user who submitted the story
+        self.submitter_profile = submitter_profile # the above user profile link
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
 
@@ -140,6 +152,7 @@ class Story():
         print 'Domain: %s' % self.domain
         print 'Points: %d' % self.points
         print 'Submitted by: %s' % self.submitter
+        print 'Submitter profile: %s' % self.submitter_profile
         print 'Number of comments: %d' % self.num_comments
         print 'Link to comments: %s' % self.comments_link
         
