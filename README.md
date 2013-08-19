@@ -44,6 +44,7 @@ Story class represents one single story on HN
 * **domain** - the domain of the link (None for self posts)
 * **points** - the points/karma on the story
 * **submitter** - the user who submitted the story
+* **published_time** - the published time ago
 * **num_comments** - the number of comments it has
 * **comments_link** - the link to the comments page
 
