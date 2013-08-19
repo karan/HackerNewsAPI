@@ -127,8 +127,8 @@ class Story():
         self.link = link # the url it points to (None for self posts)
         self.domain = domain # the domain of the link (None for self posts)
         self.points = points # the points/karma on the story
-        self.submitter = submitter # the published time ago
-        self.published_time = published_time # the user who submitted the story
+        self.submitter = submitter # the user who submitted the story
+        self.published_time = published_time # the published time ago
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
 
