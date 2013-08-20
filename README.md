@@ -40,6 +40,7 @@ Story class represents one single story on HN
 * **rank** - the rank of story on the page
 * **story_id** - the story's id
 * **title** - the title of the story
+* **is_self_post** - true for self/job stories
 * **link** - the url it points to (None for self posts)
 * **domain** - the domain of the link (None for self posts)
 * **points** - the points/karma on the story
@@ -60,15 +61,24 @@ Example
     
     hn = HN()
     
+    # print top 10 stories from homepage
     for story in hn.get_top_stories()[:10]:
         story.print_story()
         print '*' * 50
         print ''
     
-    for story in hn.get_newest_stories()[:5]:
+    # print 10 latest stories
+    for story in hn.get_newest_stories()[:10]:
         story.print_story()
         print '*' * 50
         print ''
+    
+    # print all self posts from the homepage
+    for story in hn.get_top_stories():
+        if story.is_self_post:
+            story.print_story()
+            print '*' * 50
+            print ''
         
 Contribute
 ========
