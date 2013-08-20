@@ -76,6 +76,7 @@ class HN():
             
             points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
             submitter = detail_concern[2].string
+            published_time = ' '.join(detail_concern[3].strip().split()[:3])
             comment_tag = detail_concern[4]
             story_id = int(re.match(r'.*=(\d+)', comment_tag.get('href')).groups()[0])
             comments_link = '%s/item?id=%d' % (BASE_URL, story_id)
@@ -89,7 +90,7 @@ class HN():
             #-- Get the detail about a story --#
             
             story = Story(rank, story_id, title, link, domain, points, submitter, 
-                 num_comments, comments_link)
+                 published_time, num_comments, comments_link)
             
             all_stories.append(story)
         return all_stories
@@ -119,7 +120,7 @@ class Story():
     
     
     def __init__(self, rank, story_id, title, link, domain, points, submitter, 
-                 num_comments, comments_link):
+                 published_time, num_comments, comments_link):
         self.rank = rank # the rank of story on the page
         self.story_id = story_id # the story's id
         self.title = title # the title of the story
@@ -127,6 +128,7 @@ class Story():
         self.domain = domain # the domain of the link (None for self posts)
         self.points = points # the points/karma on the story
         self.submitter = submitter # the user who submitted the story
+        self.published_time = published_time # the published time ago
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
 
@@ -140,6 +142,7 @@ class Story():
         print 'Domain: %s' % self.domain
         print 'Points: %d' % self.points
         print 'Submitted by: %s' % self.submitter
+        print 'Published time: %s' % self.published_time
         print 'Number of comments: %d' % self.num_comments
         print 'Link to comments: %s' % self.comments_link
         
