@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='HackerNews',
-    version='1.1.1',
+    version='1.2.0',
     author='Karan Goel',
     author_email='karan@goel.im',
     packages=['hn',],
