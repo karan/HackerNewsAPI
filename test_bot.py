@@ -4,6 +4,7 @@ from hn import HN
 
 hn = HN()
 
+
 # print top 10 stories from homepage
 for story in hn.get_top_stories()[:10]:
     story.print_story()
