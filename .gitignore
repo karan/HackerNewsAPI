@@ -36,7 +36,3 @@ nosetests.xml
 
 *.komodoproject
 .komodotools/
-
-MANIFEST
-
-commands.txt
