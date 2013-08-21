@@ -1,4 +1,4 @@
-![Hacker News AI](https://raw.github.com/thekarangoel/HackerNewsAPI/master/HN.jpg)
+![Hacker News API](https://raw.github.com/thekarangoel/HackerNewsAPI/master/HN.jpg)
 
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
 
