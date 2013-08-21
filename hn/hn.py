@@ -35,6 +35,12 @@ class HN():
     """The class that parses the HN page, and builds up all Story objects"""
     
     
+    def get_soup(self, page=''):
+        """Returns a bs4 object of the page requested"""
+        content = urlopen('%s/%s' % (BASE_URL, page)).read()
+        return BeautifulSoup(content)
+    
+    
     def get_zipped_rows(self, soup):
         """Returns all 'tr' tag rows as a list of tuples. Each tuple is for
         a single story."""
@@ -113,20 +119,15 @@ class HN():
     def get_top_stories(self):
         """Returns a list of Story objects from the homepage
         of HN"""
-        content = urlopen(BASE_URL).read()
-        soup = BeautifulSoup(content)
-        all_rows = self.get_zipped_rows(soup)
+        all_rows = self.get_zipped_rows(self.get_soup(page=''))
         return self.build_story(all_rows)
         
         
     def get_newest_stories(self):
         """Returns a list of Story objects from the newest page
         of HN"""
-        content = urlopen('%s/newest' % BASE_URL).read()
-        soup = BeautifulSoup(content)
-        all_rows = self.get_zipped_rows(soup)
+        all_rows = self.get_zipped_rows(self.get_soup(page='newest'))
         return self.build_story(all_rows)
-    
 
 
 class Story():
