@@ -14,6 +14,12 @@ Dependencies
 
     $ pip install beautifulsoup4
 
+
+[Donate](https://www.gittip.com/Karan%20Goel/)
+=============
+
+If you love and use *HackerNewsAPI*, please consider [donating via gittip](https://www.gittip.com/Karan%20Goel/). Any support is appreciated!
+
 Classes
 ==========
 
