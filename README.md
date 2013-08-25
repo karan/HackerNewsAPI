@@ -2,6 +2,8 @@
 
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
 
+[![Version](https://pypip.in/v/HackerNews/badge.png)](https://crate.io/packages/HackerNews/)   [![Downloads](https://pypip.in/d/HackerNews/badge.png)](https://crate.io/packages/HackerNews/)
+
 Installation
 ============
 
