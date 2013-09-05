@@ -35,13 +35,13 @@ class HN():
     """The class that parses the HN page, and builds up all Story objects"""
     
     
-    def get_soup(self, page=''):
+    def __get_soup(self, page=''):
         """Returns a bs4 object of the page requested"""
         content = urlopen('%s/%s' % (BASE_URL, page)).read()
         return BeautifulSoup(content)
     
     
-    def get_zipped_rows(self, soup):
+    def __get_zipped_rows(self, soup):
         """Returns all 'tr' tag rows as a list of tuples. Each tuple is for
         a single story."""
         table = soup.findChildren('table')[2] # the table with all submissions
@@ -57,7 +57,7 @@ class HN():
         return zip(info, detail) # build a list of tuple for all post
     
     
-    def build_story(self, all_rows):
+    def __build_story(self, all_rows):
         """Builds and returns a complete Story object from
         the passed source."""
         all_stories = [] # list to hold all stories
@@ -116,18 +116,16 @@ class HN():
         return all_stories
     
     
-    def get_top_stories(self):
-        """Returns a list of Story objects from the homepage
-        of HN"""
-        all_rows = self.get_zipped_rows(self.get_soup(page=''))
-        return self.build_story(all_rows)
-        
-        
-    def get_newest_stories(self):
-        """Returns a list of Story objects from the newest page
-        of HN"""
-        all_rows = self.get_zipped_rows(self.get_soup(page='newest'))
-        return self.build_story(all_rows)
+    def get_stories(self, story_type=''):
+        """
+        Returns a list of Story objects from the passed page
+        of HN. 'story_type' can be:
+        '' = top stories (homepage)
+        'newest' = most recent stories
+        'best' = best stories
+        """
+        all_rows = self.__get_zipped_rows(self.__get_soup(page=story_type))
+        return self.__build_story(all_rows)
 
 
 class Story():

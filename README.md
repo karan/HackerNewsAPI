@@ -1,6 +1,6 @@
 ![Hacker News API](https://raw.github.com/thekarangoel/HackerNewsAPI/master/HN.jpg)
 
-Unofficial Python API for [Hacker News](https://news.ycombinator.com/). Currently supports reading HN homepage and newest stories page only.
+Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 
 [![Version](https://pypip.in/v/HackerNews/badge.png)](https://crate.io/packages/HackerNews/)   [![Downloads](https://pypip.in/d/HackerNews/badge.png)](https://crate.io/packages/HackerNews/)
 
@@ -8,13 +8,6 @@ Installation
 ============
 
     $ pip install HackerNews
-
-Dependencies
-============
-
-**Beautiful Soup**
-
-    $ pip install beautifulsoup4
 
 
 [Donate](https://www.gittip.com/Karan%20Goel/)
@@ -31,9 +24,7 @@ The class that parses the HN page, and builds up all Story objects
 
 #### Methods
 
-`get_top_stories()` - Returns a list of Story objects from the homepage of HN
-
-`get_newest_stories()` - Returns a list of Story objects from the newest page of HN
+`get_stories(story_type='')` - Returns a list of Story objects from the passed page of HN. 'story_type' can be: '' = top stories (homepage), 'newest' = most recent stories, 'best' = best stories
 
 ## `Story`
 
@@ -61,32 +52,7 @@ Story class represents one single story on HN
 Example
 ========
 
-[`test_bot.py`](https://github.com/thekarangoel/HackerNewsAPI/blob/master/test_bot.py) prints top and new posts.
-
-    #!/usr/bin/env python
-    
-    from hn import HN
-    
-    hn = HN()
-    
-    # print top 10 stories from homepage
-    for story in hn.get_top_stories()[:10]:
-        story.print_story()
-        print '*' * 50
-        print ''
-    
-    # print 10 latest stories
-    for story in hn.get_newest_stories()[:10]:
-        story.print_story()
-        print '*' * 50
-        print ''
-    
-    # print all self posts from the homepage
-    for story in hn.get_top_stories():
-        if story.is_self_post:
-            story.print_story()
-            print '*' * 50
-            print ''
+See [`test_bot.py`](https://github.com/thekarangoel/HackerNewsAPI/blob/master/test_bot.py)
         
 Contribute
 ========
