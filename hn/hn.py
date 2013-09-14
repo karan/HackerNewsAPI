@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 """
-Unofficial Python API for Hacker News.
-Currently supports reading HN homepage and newest stories
-page only.
-
 @author Karan Goel
 @email karan@goel.im
 
@@ -22,6 +18,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+
 import re
 from urllib2 import urlopen
 
@@ -31,7 +29,7 @@ from bs4 import BeautifulSoup
 BASE_URL = 'http://news.ycombinator.com'
 
 
-class HN():
+class HN(object):
     """The class that parses the HN page, and builds up all Story objects"""
     
     
@@ -128,7 +126,7 @@ class HN():
         return self.__build_story(all_rows)
 
 
-class Story():
+class Story(object):
     """Story class represents one single story on HN"""
     
     
