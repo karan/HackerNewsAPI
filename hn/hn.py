@@ -30,18 +30,24 @@ BASE_URL = 'http://news.ycombinator.com'
 
 
 class HN(object):
-    """The class that parses the HN page, and builds up all Story objects"""
+    """
+    The class that parses the HN page, and builds up all stories
+    """
     
     
     def __get_soup(self, page=''):
-        """Returns a bs4 object of the page requested"""
+        """
+        Returns a bs4 object of the page requested
+        """
         content = urlopen('%s/%s' % (BASE_URL, page)).read()
         return BeautifulSoup(content)
     
     
     def __get_zipped_rows(self, soup):
-        """Returns all 'tr' tag rows as a list of tuples. Each tuple is for
-        a single story."""
+        """
+        Returns all 'tr' tag rows as a list of tuples. Each tuple is for
+        a single story.
+        """
         table = soup.findChildren('table')[2] # the table with all submissions
         rows = table.findChildren(['tr'])[:-2] # get all rows but last 2
         # remove the spacing rows
@@ -56,11 +62,13 @@ class HN(object):
     
     
     def __build_story(self, all_rows):
-        """Builds and returns a complete Story object from
-        the passed source."""
+        """
+        Builds and returns a list of stories (dicts) from the passed source.
+        """
         all_stories = [] # list to hold all stories
         
         for (info, detail) in all_rows:
+
             #-- Get the into about a story --#
             info_cells = info.findAll('td') # split in 3 cells
             
@@ -68,12 +76,12 @@ class HN(object):
             title = info_cells[2].find('a').string
             link = info_cells[2].find('a').get('href')
             
-            is_self_post = False # by default all stories are linking posts
+            is_self = False # by default all stories are linking posts
             
             if link.find('http') is -1 : # the link doesn't contains "http" meaning an internal link
                 link = '%s/%s' % (BASE_URL, link)
                 domain = BASE_URL
-                is_self_post = True
+                is_self = True
             else:
                 domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
             #-- Get the into about a story --#
@@ -108,15 +116,30 @@ class HN(object):
                 comments_link = None
                 comment_count = 0
             #-- Get the detail about a story --#
-            story = Story(rank, story_id, title, link, domain, points, submitter, 
-                 published_time, submitter_profile, num_comments, comments_link, is_self_post)
+            
+            story = {
+                "rank": rank, 
+                "story_id": story_id, 
+                "title": title, 
+                "link": link, 
+                "domain": domain, 
+                "points": points, 
+                "submitter": submitter, 
+                "published_time": published_time, 
+                "submitter_profile": submitter_profile, 
+                "num_comments": num_comments, 
+                "comments_link": comments_link, 
+                "is_self": is_self
+
+            }
             all_stories.append(story)
+            
         return all_stories
     
     
     def get_stories(self, story_type=''):
         """
-        Returns a list of Story objects from the passed page
+        Returns a list of stories from the passed page
         of HN. 'story_type' can be:
         '' = top stories (homepage)
         'newest' = most recent stories
@@ -124,44 +147,3 @@ class HN(object):
         """
         all_rows = self.__get_zipped_rows(self.__get_soup(page=story_type))
         return self.__build_story(all_rows)
-
-
-class Story(object):
-    """Story class represents one single story on HN"""
-    
-    
-    def __init__(self, rank, story_id, title, link, domain, points, submitter, 
-                 published_time, submitter_profile, num_comments, comments_link, is_self_post):
-        self.rank = rank # the rank of story on the page
-        self.story_id = story_id # the story's id
-        self.title = title # the title of the story
-        self.link = link # the url it points to (None for self posts)
-        self.domain = domain # the domain of the link (None for self posts)
-        self.points = points # the points/karma on the story
-        self.submitter = submitter # the user who submitted the story
-        self.submitter_profile = submitter_profile # the above user profile link
-        self.published_time = published_time # the published time ago
-        self.num_comments = num_comments # the number of comments it has
-        self.comments_link = comments_link # the link to the comments page
-        self.is_self_post = is_self_post # true if story is a self/job post
-
-
-    def print_story(self):
-        """Print the details of a story"""
-        print 'Rank: %d' % self.rank
-        print 'Story ID: %d' % self.story_id
-        print 'Title: %s' % self.title.encode('cp850', errors='replace')
-        print 'Is self post? %s' % str(self.is_self_post)
-        print 'Link: %s' % self.link
-        print 'Domain: %s' % self.domain
-        print 'Points: %d' % self.points
-        print 'Submitted by: %s' % self.submitter
-        print 'Submitter profile: %s' % self.submitter_profile
-        print 'Published time: %s' % self.published_time
-        print 'Number of comments: %d' % self.num_comments
-        print 'Link to comments: %s' % self.comments_link
-        
-    
-    def __repr__(self):
-        """A string representation of the class object"""
-        return '{0} by {1}'.format(self.title, self.submitter)

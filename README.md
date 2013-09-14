@@ -24,22 +24,14 @@ The class that parses the HN page, and builds up all Story objects
 
 #### Methods
 
-`get_stories(story_type='')` - Returns a list of Story objects from the passed page of HN. 'story_type' can be: '' = top stories (homepage), 'newest' = most recent stories, 'best' = best stories
+`get_stories(story_type='')` - Returns a list of stories from the passed page of HN. 'story_type' can be: '' = top stories (homepage), 'newest' = most recent stories, 'best' = best stories
 
-## `Story`
-
-Story class represents one single story on HN
-
-#### Methods
-
-`print_story()` - Print the details of a story
-
-#### Story details
+#### Story details (keys of `dict`)
 
 * **rank** - the rank of story on the page
 * **story_id** - the story's id
 * **title** - the title of the story
-* **is_self_post** - true for self/job stories
+* **is_self** - true for self/job stories
 * **link** - the url it points to (None for self posts)
 * **domain** - the domain of the link (None for self posts)
 * **points** - the points/karma on the story
