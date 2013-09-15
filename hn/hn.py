@@ -21,9 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 import re
-from urllib2 import urlopen
 
 from bs4 import BeautifulSoup
+import requests
 
 
 BASE_URL = 'http://news.ycombinator.com'
@@ -39,7 +39,7 @@ class HN(object):
         """
         Returns a bs4 object of the page requested
         """
-        content = urlopen('%s/%s' % (BASE_URL, page)).read()
+        content = requests.get('%s/%s' % (BASE_URL, page)).text
         return BeautifulSoup(content)
     
     

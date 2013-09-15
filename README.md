@@ -20,7 +20,7 @@ Classes
 
 ## `HN`
 
-The class that parses the HN page, and builds up all Story objects
+The class that parses the HN page, and builds up all stories.
 
 #### Methods
 
