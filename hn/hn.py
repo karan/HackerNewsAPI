@@ -35,7 +35,7 @@ class HN(object):
     """
     
     
-    def __get_soup(self, page=''):
+    def _get_soup(self, page=''):
         """
         Returns a bs4 object of the page requested
         """
@@ -43,7 +43,7 @@ class HN(object):
         return BeautifulSoup(content)
     
     
-    def __get_zipped_rows(self, soup):
+    def _get_zipped_rows(self, soup):
         """
         Returns all 'tr' tag rows as a list of tuples. Each tuple is for
         a single story.
@@ -61,7 +61,7 @@ class HN(object):
         return zip(info, detail) # build a list of tuple for all post
     
     
-    def __build_story(self, all_rows):
+    def _build_story(self, all_rows):
         """
         Builds and returns a list of stories (dicts) from the passed source.
         """
@@ -145,5 +145,5 @@ class HN(object):
         'newest' = most recent stories
         'best' = best stories
         """
-        all_rows = self.__get_zipped_rows(self.__get_soup(page=story_type))
-        return self.__build_story(all_rows)
+        all_rows = self._get_zipped_rows(self._get_soup(page=story_type))
+        return self._build_story(all_rows)
