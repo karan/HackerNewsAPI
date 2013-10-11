@@ -81,7 +81,7 @@ class HN(object):
             info_cells = info.findAll('td') # split in 3 cells
             
             rank = int(info_cells[0].string[:-1])
-            title = info_cells[2].find('a').string
+            title = info_cells[2].find('a').string.encode('utf-8')
             link = info_cells[2].find('a').get('href')
             
             is_self = False # by default all stories are linking posts
@@ -101,7 +101,7 @@ class HN(object):
             if re.match(r'^(\d+)\spoint.*', detail_concern[0].string) is not None:
                 # can be a link or self post
                 points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
-                submitter = detail_concern[2].string
+                submitter = detail_concern[2].string.encode('utf-8')
                 submitter_profile = '%s/%s' % (BASE_URL, detail_concern[2].get('href'))
                 published_time = ' '.join(detail_concern[3].strip().split()[:3])
                 comment_tag = detail_concern[4]
