@@ -34,7 +34,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-BASE_URL = 'http://news.ycombinator.com'
+BASE_URL = 'https://news.ycombinator.com'
 
 
 class HN(object):
