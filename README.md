@@ -1,4 +1,4 @@
-![Hacker News API](https://raw.github.com/thekarangoel/HackerNewsAPI/master/HN.jpg)
+![Hacker News API](https://raw.github.com/karan/HackerNewsAPI/master/HN.jpg)
 
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 
@@ -44,7 +44,7 @@ The class that parses the HN page, and builds up all stories.
 Example
 ========
 
-See [`test_bot.py`](https://github.com/thekarangoel/HackerNewsAPI/blob/master/test_bot.py)
+See [`test_bot.py`](https://github.com/karan/HackerNewsAPI/blob/master/test_bot.py)
         
 Contribute
 ========
