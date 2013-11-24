@@ -118,7 +118,7 @@ class HN(object):
                 points = 0
                 submitter = None
                 submitter_profile = None
-                published_time = None
+                published_time = detail_concern[0]
                 comment_tag = None
                 try:
                     story_id = int(re.match(r'.*=(\d+)', link).groups()[0])
