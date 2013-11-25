@@ -50,3 +50,10 @@ Contribute
 ========
 
 If you want to add any new features, or improve existing ones, feel free to send a pull request!
+
+Tests
+=====
+
+To run the tests locally just install the requirements by running `pip install -r requirements.txt`.
+
+Then run the command `nosetests` in the command line from within the projects root directory.
