@@ -5,11 +5,12 @@ except ImportError:
 
 setup(
     name='HackerNews',
-    version='1.5.9',
+    version='1.6.0',
     install_requires=['BeautifulSoup4>=4.3.1', 'requests'],
     author='Karan Goel',
     author_email='karan@goel.im',
-    packages=['hn',],
+    packages=['hn', 'tests'],
+    test_suite='tests',
     url='https://github.com/karan/HackerNewsAPI/',
     license='MIT License',
     description='Python API for Hacker News.',
