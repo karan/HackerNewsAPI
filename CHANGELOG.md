@@ -1,3 +1,9 @@
+## v1.6.2
+
+- Add: Python 3 compatibility
+- Add: More test cases
+- Fix: Coverall range
+
 ## v1.6.1
 
 - Add: Travis CI integration
