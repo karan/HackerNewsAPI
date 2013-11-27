@@ -77,3 +77,24 @@ def test_stories_dict_structure_best():
         assert type(story['num_comments']) == int
         assert type(story['comments_link']) == unicode or str
         assert type(story['is_self']) == bool
+
+def test_stories_dict_length_top():
+    """
+    This test checks if the dict returned by scraping the front page
+    of HN is 30.
+    """
+    assert len(hn.get_stories()) == 30
+
+def test_stories_dict_length_best():
+    """
+    This test checks if the dict returned by scraping the best page
+    of HN is 30.
+    """
+    assert len(hn.get_stories(story_type='best')) == 30
+    
+def test_stories_dict_length_top_newest():
+    """
+    This test checks if the dict returned by scraping the newest page
+    of HN is 30.
+    """
+    assert len(hn.get_stories(story_type='newest')) == 30

@@ -68,7 +68,8 @@ class HN(object):
         info = [row for (i, row) in enumerate(rows) if (i % 2 == 0)]
         # points, submitter, comments
         detail = [row for (i, row) in enumerate(rows) if (i % 2 != 0)]
-
+        
+        print len(info), len(detail)
         return zip(info, detail) # build a list of tuple for all post
 
 
@@ -147,7 +148,8 @@ class HN(object):
 
             }
             all_stories.append(story)
-
+        
+        print len(all_stories)
         return all_stories
 
 
