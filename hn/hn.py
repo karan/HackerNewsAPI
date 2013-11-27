@@ -119,16 +119,16 @@ class HN(object):
                     num_comments = 0
             else: # this is a job post
                 points = 0
-                submitter = None
-                submitter_profile = None
-                published_time = detail_concern[0]
-                comment_tag = None
+                submitter = ''
+                submitter_profile = ''
+                published_time = unicode(detail_concern[0])
+                comment_tag = ''
                 try:
                     story_id = int(re.match(r'.*=(\d+)', link).groups()[0])
                 except AttributeError:
-                    story_id = None # job listing that points to external link
-                comments_link = None
-                comment_count = 0
+                    story_id = -1 # job listing that points to external link
+                comments_link = ''
+                comment_count = -1
             #-- Get the detail about a story --#
 
             story = {

@@ -17,15 +17,15 @@ def test_stories_dict_structure():
         # because the types are mixed sometimes
         assert type(story['rank']) == int
         assert type(story['story_id']) == int
-        assert type(story['title']) == unicode or str
-        assert type(story['link']) == unicode or str
-        assert type(story['domain']) == unicode or str
+        assert type(story['title']) in [unicode, str]
+        assert type(story['link']) in [unicode, str]
+        assert type(story['domain']) in [unicode, str]
         assert type(story['points']) == int
-        assert type(story['submitter']) == unicode or str
-        assert type(story['published_time']) == unicode or str
-        assert type(story['submitter_profile']) == unicode or str
+        assert type(story['submitter']) in [unicode, str]
+        assert type(story['published_time']) in [unicode, str]
+        assert type(story['submitter_profile']) in [unicode, str]
         assert type(story['num_comments']) == int
-        assert type(story['comments_link']) == unicode or str
+        assert type(story['comments_link']) in [unicode, str]
         assert type(story['is_self']) == bool
 
 
@@ -42,15 +42,15 @@ def test_stories_dict_structure_newest():
         # because the types are mixed sometimes
         assert type(story['rank']) == int
         assert type(story['story_id']) == int
-        assert type(story['title']) == unicode or str
-        assert type(story['link']) == unicode or str
-        assert type(story['domain']) == unicode or str
+        assert type(story['title']) in [unicode, str]
+        assert type(story['link']) in [unicode, str]
+        assert type(story['domain']) in [unicode, str]
         assert type(story['points']) == int
-        assert type(story['submitter']) == unicode or str
-        assert type(story['published_time']) == unicode or str
-        assert type(story['submitter_profile']) == unicode or str
+        assert type(story['submitter']) in [unicode, str]
+        assert type(story['published_time']) in [unicode, str]
+        assert type(story['submitter_profile']) in [unicode, str]
         assert type(story['num_comments']) == int
-        assert type(story['comments_link']) == unicode or str
+        assert type(story['comments_link']) in [unicode, str]
         assert type(story['is_self']) == bool
 
 
@@ -67,15 +67,15 @@ def test_stories_dict_structure_best():
         # because the types are mixed sometimes
         assert type(story['rank']) == int
         assert type(story['story_id']) == int
-        assert type(story['title']) == unicode or str
-        assert type(story['link']) == unicode or str
-        assert type(story['domain']) == unicode or str
+        assert type(story['title']) in [unicode, str]
+        assert type(story['link']) in [unicode, str]
+        assert type(story['domain']) in [unicode, str]
         assert type(story['points']) == int
-        assert type(story['submitter']) == unicode or str
-        assert type(story['published_time']) == unicode or str
-        assert type(story['submitter_profile']) == unicode or str
+        assert type(story['submitter']) in [unicode, str]
+        assert type(story['published_time']) in [unicode, str]
+        assert type(story['submitter_profile']) in [unicode, str]
         assert type(story['num_comments']) == int
-        assert type(story['comments_link']) == unicode or str
+        assert type(story['comments_link']) in [unicode, str]
         assert type(story['is_self']) == bool
 
 def test_stories_dict_length_top():

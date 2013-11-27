@@ -6,7 +6,7 @@ hn = HN()
 
 
 # print top 10 stories from homepage
-for story in hn.get_stories()[:10]:
+for story in hn.get_stories():
     print story
     print '*' * 50
     print ''
