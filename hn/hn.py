@@ -59,7 +59,10 @@ class HN(object):
         table = soup.findChildren('table')[2] # the table with all submissions
         rows = table.findChildren(['tr'])[:-2] # get all rows but last 2
         # remove the spacing rows
-        spacing = xrange(2, len(rows), 3) # indices of spacing tr's
+        try:
+            spacing = xrange(2, len(rows), 3) # indices of spacing tr's
+        except:
+            spacing = range(2, len(rows), 3) # indices of spacing tr's python3
         rows = [row for (i, row) in enumerate(rows) if (i not in spacing)]
         # rank, title, domain
         info = [row for (i, row) in enumerate(rows) if (i % 2 == 0)]
