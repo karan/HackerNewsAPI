@@ -32,15 +32,44 @@ import re
 
 from bs4 import BeautifulSoup
 import requests
+import time
 
 
 BASE_URL = 'https://news.ycombinator.com'
-
+INTERVAL_BETWEEN_REQUESTS = 1 #Sleep these many seconds between 2 consecutive page requests
 
 class HN(object):
     """
     The class that parses the HN page, and builds up all stories
     """
+
+
+    def _get_next_page(self, soup):
+        """
+        Get the relative url of the next page (The "More" link @ the bottom of the page)
+        """
+        table = soup.findChildren('table')[2] # the table with all submissions
+        return table.findChildren(['tr'])[-1].find('a').get('href') # the last row of the table contains the relative url of the next page
+
+
+    def _get_soups(self, page, fpl=0):
+        """
+        Get bs4 objects for all pages in the chain starting from 'page' following up to fpl links
+        """
+        soups = list()
+        soups.append(self._get_soup(page))
+
+        while len(soups) < (fpl+1):
+            cur_soup = soups[-1]
+            time.sleep(INTERVAL_BETWEEN_REQUESTS) #Be a good citizen.
+            next_page = self._get_next_page(cur_soup).lstrip("//")
+            next_soup = self._get_soup(next_page)
+            if not len(next_soup.findChildren("table")) == 0:
+                soups.append(next_soup)
+            else:
+                break
+
+        return soups
 
 
     def _get_soup(self, page=''):
@@ -151,13 +180,20 @@ class HN(object):
         return all_stories
 
 
-    def get_stories(self, story_type=''):
+    def get_stories(self, story_type='', follow_pagination_limit=0):
         """
         Returns a list of stories from the passed page
         of HN. 'story_type' can be:
         '' = top stories (homepage)
         'newest' = most recent stories
         'best' = best stories
+
+        'follow_pagination_limit' specifies the maximum number of additional paginated pages to follow.
         """
-        all_rows = self._get_zipped_rows(self._get_soup(page=story_type))
-        return self._build_story(all_rows)
+        story = list()
+        all_soups = self._get_soups(story_type, follow_pagination_limit)
+        for soup in all_soups:
+            all_rows = self._get_zipped_rows(soup)
+            story = story + self._build_story(all_rows)
+
+        return story
