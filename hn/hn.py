@@ -29,14 +29,14 @@ SOFTWARE.
 
 
 import re
+import time
 
 from bs4 import BeautifulSoup
 import requests
-import time
 
 
 BASE_URL = 'https://news.ycombinator.com'
-INTERVAL_BETWEEN_REQUESTS = 1 #Sleep these many seconds between 2 consecutive page requests
+INTERVAL_BETWEEN_REQUESTS = 1 # seconds to sleep between 2 consecutive page requests
 
 class HN(object):
     """
@@ -46,29 +46,36 @@ class HN(object):
 
     def _get_next_page(self, soup):
         """
-        Get the relative url of the next page (The "More" link @ the bottom of the page)
+        Get the relative url of the next page (The "More" link at
+        the bottom of the page)
         """
         table = soup.findChildren('table')[2] # the table with all submissions
-        return table.findChildren(['tr'])[-1].find('a').get('href') # the last row of the table contains the relative url of the next page
+        
+        # the last row of the table contains the relative url of the next page
+        return table.findChildren(['tr'])[-1].find('a').get('href')
 
 
-    def _get_soups(self, page, fpl=0):
+    def _get_soups(self, page, page_limit=1):
         """
-        Get bs4 objects for all pages in the chain starting from 'page' following up to fpl links
+        Returns a list of soups bs4 objects for all pages in the chain starting
+        from 'page' following up to page_limit links.
+        \tpage_limit=1 implies just the top level page
         """
-        soups = list()
-        soups.append(self._get_soup(page))
+        soups = list() # will hold all soups
+        soups.append(self._get_soup(page)) # get the first page
 
-        while len(soups) < (fpl+1):
-            cur_soup = soups[-1]
-            time.sleep(INTERVAL_BETWEEN_REQUESTS) #Be a good citizen.
-            next_page = self._get_next_page(cur_soup).lstrip("//")
-            next_soup = self._get_soup(next_page)
-            if not len(next_soup.findChildren("table")) == 0:
+        while len(soups) < page_limit:
+            # get as manu pages as requested
+            cur_soup = soups[-1] # get the last seen page's soup
+            time.sleep(INTERVAL_BETWEEN_REQUESTS) # be a good citizen
+            next_page = self._get_next_page(cur_soup).lstrip('//')
+            next_soup = self._get_soup(next_page) # get the next soup
+            if len(next_soup.findChildren('table')) != 0:
+                # making sure we are on the right page... get it?
                 soups.append(next_soup)
             else:
                 break
-
+            
         return soups
 
 
@@ -180,18 +187,19 @@ class HN(object):
         return all_stories
 
 
-    def get_stories(self, story_type='', follow_pagination_limit=0):
+    def get_stories(self, story_type='', page_limit=1):
         """
         Returns a list of stories from the passed page
         of HN. 'story_type' can be:
-        '' = top stories (homepage)
-        'newest' = most recent stories
-        'best' = best stories
+        \t'' = top stories (homepage)
+        \t'newest' = most recent stories
+        \t'best' = best stories
 
-        'follow_pagination_limit' specifies the maximum number of additional paginated pages to follow.
+        'page_limit' specifies the maximum number of pages to get.
+        \tpage_limit=1 implies just the top level page
         """
         story = list()
-        all_soups = self._get_soups(story_type, follow_pagination_limit)
+        all_soups = self._get_soups(story_type, page_limit)
         for soup in all_soups:
             all_rows = self._get_zipped_rows(soup)
             story = story + self._build_story(all_rows)
