@@ -1,8 +1,8 @@
-## v1.6.2
+## v1.6.3
 
+- Add: Pagination
 - Add: Python 3 compatibility
 - Add: More test cases
-- Fix: Coverall range
 
 ## v1.6.1
 
