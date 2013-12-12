@@ -28,6 +28,7 @@ for story in hn.get_stories(story_type='best')[:10]:
 '''
 
 # print the first 2 pages of newest stories
-for story in hn.get_stories(story_type='newest', page_limit=2):
+stories = hn.get_stories(story_type='best', page_limit=5)
+for story in stories:
     print story["rank"], story["title"]
     print
