@@ -1,4 +1,4 @@
-## v1.6.3
+## v1.6.2
 
 - Add: Pagination
 - Add: Python 3 compatibility
