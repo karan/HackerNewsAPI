@@ -10,7 +10,7 @@ Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 Features
 ============
 
-- Compatible with Python 2 and Python 3
+- Compatible with Python 2
 - Supports 'top', 'newest' and 'best' posts
 - Pagination
 - Handles external posts, self posts and job posts
@@ -28,6 +28,9 @@ If you love and use *HackerNewsAPI*, please consider [donating via gittip](https
 
 Usage
 ==========
+
+**NOTE:** Do not make a lot of requests in a short period of time. HN has it's own throttling system.
+
 
     from hn import HN
 
@@ -68,6 +71,6 @@ Tests
 
 To run the tests locally just install the requirements by running `pip install -r requirements.txt`.
 
-Then run the command `nosetests` in the command line from within the projects root directory.
+Then run the command `nosetests -v` in the command line from within the projects root directory.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/karan/hackernewsapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

@@ -67,7 +67,6 @@ class HN(object):
         while len(soups) < page_limit:
             # get as manu pages as requested
             cur_soup = soups[-1] # get the last seen page's soup
-            time.sleep(INTERVAL_BETWEEN_REQUESTS) # be a good citizen
             next_page = self._get_next_page(cur_soup).lstrip('//')
             next_soup = self._get_soup(next_page) # get the next soup
             if len(next_soup.findChildren('table')) != 0:
@@ -75,7 +74,7 @@ class HN(object):
                 soups.append(next_soup)
             else:
                 break
-            
+            time.sleep(INTERVAL_BETWEEN_REQUESTS) # be a good citizen
         return soups
 
 
