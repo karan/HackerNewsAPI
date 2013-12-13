@@ -1,5 +1,19 @@
+
+import sys
+
 from hn import HN
 from nose import with_setup
+
+
+# check python version
+# TODO: refactor, maybe push in setup?
+PY2 = sys.version_info[0] == 2
+print(PY2)
+if not PY2:
+    text_type = [str]
+else:
+    text_type = [unicode, str]
+
 
 class Test_Stories_Dict(object):
     
@@ -25,15 +39,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in [unicode, str]
-            assert type(story['link']) in [unicode, str]
-            assert type(story['domain']) in [unicode, str]
+            assert type(story['title']) in text_type
+            assert type(story['link']) in text_type
+            assert type(story['domain']) in text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in [unicode, str]
-            assert type(story['published_time']) in [unicode, str]
-            assert type(story['submitter_profile']) in [unicode, str]
+            assert type(story['submitter']) in text_type
+            assert type(story['published_time']) in text_type
+            assert type(story['submitter_profile']) in text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in [unicode, str]
+            assert type(story['comments_link']) in text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)
@@ -46,15 +60,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in [unicode, str]
-            assert type(story['link']) in [unicode, str]
-            assert type(story['domain']) in [unicode, str]
+            assert type(story['title']) in text_type
+            assert type(story['link']) in text_type
+            assert type(story['domain']) in text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in [unicode, str]
-            assert type(story['published_time']) in [unicode, str]
-            assert type(story['submitter_profile']) in [unicode, str]
+            assert type(story['submitter']) in text_type
+            assert type(story['published_time']) in text_type
+            assert type(story['submitter_profile']) in text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in [unicode, str]
+            assert type(story['comments_link']) in text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)
@@ -67,15 +81,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in [unicode, str]
-            assert type(story['link']) in [unicode, str]
-            assert type(story['domain']) in [unicode, str]
+            assert type(story['title']) in text_type
+            assert type(story['link']) in text_type
+            assert type(story['domain']) in text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in [unicode, str]
-            assert type(story['published_time']) in [unicode, str]
-            assert type(story['submitter_profile']) in [unicode, str]
+            assert type(story['submitter']) in text_type
+            assert type(story['published_time']) in text_type
+            assert type(story['submitter_profile']) in text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in [unicode, str]
+            assert type(story['comments_link']) in text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)
