@@ -5,20 +5,17 @@ from hn import HN
 from nose import with_setup
 
 
-# check python version
-# TODO: refactor, maybe push in setup?
-PY2 = sys.version_info[0] == 2
-print(PY2)
-if not PY2:
-    text_type = [str]
-else:
-    text_type = [unicode, str]
-
-
 class Test_Stories_Dict(object):
     
     @classmethod
     def setup(self):
+        # check py version
+        PY2 = sys.version_info[0] == 2
+        if not PY2:
+            self.text_type = [str]
+        else:
+            self.text_type = [unicode, str]
+        
         self.hn = HN()
         self.top_stories = self.hn.get_stories()
         self.newest_stories = self.hn.get_stories(story_type='newest')
@@ -39,15 +36,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in text_type
-            assert type(story['link']) in text_type
-            assert type(story['domain']) in text_type
+            assert type(story['title']) in self.text_type
+            assert type(story['link']) in self.text_type
+            assert type(story['domain']) in self.text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in text_type
-            assert type(story['published_time']) in text_type
-            assert type(story['submitter_profile']) in text_type
+            assert type(story['submitter']) in self.text_type
+            assert type(story['published_time']) in self.text_type
+            assert type(story['submitter_profile']) in self.text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in text_type
+            assert type(story['comments_link']) in self.text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)
@@ -60,15 +57,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in text_type
-            assert type(story['link']) in text_type
-            assert type(story['domain']) in text_type
+            assert type(story['title']) in self.text_type
+            assert type(story['link']) in self.text_type
+            assert type(story['domain']) in self.text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in text_type
-            assert type(story['published_time']) in text_type
-            assert type(story['submitter_profile']) in text_type
+            assert type(story['submitter']) in self.text_type
+            assert type(story['published_time']) in self.text_type
+            assert type(story['submitter_profile']) in self.text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in text_type
+            assert type(story['comments_link']) in self.text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)
@@ -81,15 +78,15 @@ class Test_Stories_Dict(object):
             # because the types are mixed sometimes
             assert type(story['rank']) == int
             assert type(story['story_id']) == int
-            assert type(story['title']) in text_type
-            assert type(story['link']) in text_type
-            assert type(story['domain']) in text_type
+            assert type(story['title']) in self.text_type
+            assert type(story['link']) in self.text_type
+            assert type(story['domain']) in self.text_type
             assert type(story['points']) == int
-            assert type(story['submitter']) in text_type
-            assert type(story['published_time']) in text_type
-            assert type(story['submitter_profile']) in text_type
+            assert type(story['submitter']) in self.text_type
+            assert type(story['published_time']) in self.text_type
+            assert type(story['submitter_profile']) in self.text_type
             assert type(story['num_comments']) == int
-            assert type(story['comments_link']) in text_type
+            assert type(story['comments_link']) in self.text_type
             assert type(story['is_self']) == bool
     
     @with_setup(setup, teardown)

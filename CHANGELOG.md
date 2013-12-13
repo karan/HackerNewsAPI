@@ -1,3 +1,8 @@
+## v1.6.3
+
+- Fix: Python 3 compatibility
+- Fix: Unit tests to take into account HN throttling
+
 ## v1.6.2
 
 - Add: Pagination

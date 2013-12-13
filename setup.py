@@ -5,7 +5,7 @@ except ImportError:
 
 setup(
     name='HackerNews',
-    version='1.6.2',
+    version='1.6.3',
     install_requires=['BeautifulSoup4>=4.3.1', 'requests'],
     author='Karan Goel',
     author_email='karan@goel.im',
