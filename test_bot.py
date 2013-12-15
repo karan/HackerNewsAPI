@@ -7,11 +7,7 @@ hn = HN()
 
 # print top stories from homepage
 for story in hn.get_stories():
-    try:
-        print(story)
-    except UnicodeEncodeError:
-        print story.title, story.link
-    print
+    print(story)
 
 '''
 # print 10 latest stories
