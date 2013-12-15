@@ -34,9 +34,9 @@ import time
 from bs4 import BeautifulSoup
 import requests
 
+from .utils import get_soup
+from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
-BASE_URL = 'https://news.ycombinator.com'
-INTERVAL_BETWEEN_REQUESTS = 1 # seconds to sleep between 2 consecutive page requests
 
 class HN(object):
     """
@@ -62,13 +62,13 @@ class HN(object):
         \tpage_limit=1 implies just the top level page
         """
         soups = list() # will hold all soups
-        soups.append(self._get_soup(page)) # get the first page
+        soups.append(get_soup(page)) # get the first page
 
         while len(soups) < page_limit:
             # get as manu pages as requested
             cur_soup = soups[-1] # get the last seen page's soup
             next_page = self._get_next_page(cur_soup).lstrip('//')
-            next_soup = self._get_soup(next_page) # get the next soup
+            next_soup = get_soup(next_page) # get the next soup
             if len(next_soup.findChildren('table')) != 0:
                 # making sure we are on the right page... get it?
                 soups.append(next_soup)
@@ -76,15 +76,6 @@ class HN(object):
                 break
             time.sleep(INTERVAL_BETWEEN_REQUESTS) # be a good citizen
         return soups
-
-
-    def _get_soup(self, page=''):
-        """
-        Returns a bs4 object of the page requested
-        """
-        content = requests.get('%s/%s' % (BASE_URL, page)).text
-        return BeautifulSoup(content)
-
 
     def _get_zipped_rows(self, soup):
         """
@@ -192,7 +183,7 @@ class HN(object):
         return story
 
 
-class Story():
+class Story(object):
     """
     Story class represents one single story on HN
     """
@@ -224,3 +215,15 @@ class Story():
         A string representation of the class object
         """
         return '<Story: ID={0}>'.format(self.story_id)
+    
+    def get_comments(self, story_id):
+        """
+        Returns a list of Comment(s) for the given story (id)
+        """
+
+class Comment(object):
+    """
+    Represents a comment on a post on HN
+    """
+    
+    
