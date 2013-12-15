@@ -166,21 +166,10 @@ class HN(object):
                 comment_count = -1
             #-- Get the detail about a story --#
 
-            story = {
-                "rank": rank,
-                "story_id": story_id,
-                "title": title,
-                "link": link,
-                "domain": domain,
-                "points": points,
-                "submitter": submitter,
-                "published_time": published_time,
-                "submitter_profile": submitter_profile,
-                "num_comments": num_comments,
-                "comments_link": comments_link,
-                "is_self": is_self
-
-            }
+            story = Story(rank, story_id, title, link, domain, points, submitter, 
+                 published_time, submitter_profile, num_comments, comments_link,
+                 is_self)
+            
             all_stories.append(story)
         
         return all_stories
@@ -204,3 +193,37 @@ class HN(object):
             story = story + self._build_story(all_rows)
 
         return story
+
+
+class Story():
+    """
+    Story class represents one single story on HN
+    """
+    
+    def __init__(self, rank, story_id, title, link, domain, points, submitter, 
+                 published_time, submitter_profile, num_comments, comments_link,
+                 is_self):
+        self.rank = rank # the rank of story on the page
+        self.story_id = story_id # the story's id
+        self.title = title.encode('cp850', errors='replace').decode('cp850') # the title of the story
+        self.link = link # the url it points to (None for self posts)
+        self.domain = domain # the domain of the link (None for self posts)
+        self.points = points # the points/karma on the story
+        self.submitter = submitter # the user who submitted the story
+        self.published_time = published_time # publish time of story
+        self.submitter_profile = submitter_profile # link to submitter's profile
+        self.num_comments = num_comments # the number of comments it has
+        self.comments_link = comments_link # the link to the comments page
+        self.is_self = is_self # Truw is a self post
+    
+    def __str__(self):
+        """
+        Return string representation of a story
+        """
+        return '[{0}] {1} by {2}'.format(self.points, self.title, self.submitter)
+    
+    def __repr__(self):
+        """
+        A string representation of the class object
+        """
+        return '<Story: ID={0}>'.format(self.story_id)
