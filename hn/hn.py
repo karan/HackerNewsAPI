@@ -31,9 +31,6 @@ SOFTWARE.
 import re
 import time
 
-from bs4 import BeautifulSoup
-import requests
-
 from .utils import get_soup
 from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
