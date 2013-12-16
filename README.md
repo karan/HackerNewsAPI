@@ -59,7 +59,7 @@ Each `story` has the following properties
 Example
 ========
 
-See [`test_bot.py`](https://github.com/karan/HackerNewsAPI/blob/master/test_bot.py)
+See [`my_test_bot.py`](https://github.com/karan/HackerNewsAPI/blob/master/my_test_bot.py)
 
 Contribute
 ========
