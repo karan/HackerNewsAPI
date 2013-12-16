@@ -115,6 +115,7 @@ class HN(object):
                 is_self = True
             else:
                 domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
+                
             #-- Get the into about a story --#
 
             #-- Get the detail about a story --#
@@ -200,12 +201,19 @@ class Story(object):
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
         self.is_self = is_self # Truw is a self post
-
+    
     def __str__(self):
         """
         Return string representation of a story
         """
-        return '[{0}] {1} by {2}'.format(self.points, self.title, self.submitter)
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
+        """
+        Return string representation of a story
+        @ http://stackoverflow.com/questions/20603810/
+        """
+        return u'[{0}] "{1}" by {2}'.format(self.points, self.title, self.submitter)
     
     def __repr__(self):
         """
@@ -273,9 +281,15 @@ class Comment(object):
     
     def __str__(self):
         """
-        Return string representation of a comment
+        Return string representation of a story
         """
-        return '"{0}..." by {1}'.format(self.body[:min(30, len(self.body))], self.user)
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
+        """
+        Return string representation of a story
+        """
+        return u'"{0}..." by {1}'.format(self.body[:min(30, len(self.body))], self.user)
     
     def __repr__(self):
         """
