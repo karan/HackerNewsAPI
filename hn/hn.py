@@ -31,7 +31,7 @@ SOFTWARE.
 import re
 import time
 
-from .utils import get_soup
+from .utils import get_soup, get_item_soup
 from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
 
@@ -213,14 +213,71 @@ class Story(object):
         """
         return '<Story: ID={0}>'.format(self.story_id)
     
-    def get_comments(self, story_id):
+    def _build_comments(self, soup):
         """
-        Returns a list of Comment(s) for the given story (id)
+        For the story, builds and returns a list of Comment objects.
         """
+        table = soup.findChildren('table')[3] # the table holding all comments
+        rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
+        rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
+        
+        comments = []
+        
+        if len(rows) > 1:
+            for row in rows:
+                
+                ## Builds a flat list of comments
+                
+                # level of comment, starting with 0
+                level = int(row.findChildren('td')[1].find('img').get('width'))
+
+                spans = row.findChildren('td')[3].findAll('span')
+                # span[0] = submitter details
+                # [<a href="user?id=jonknee">jonknee</a>, u' 1 hour ago  | ', <a href="item?id=6910978">link</a>]
+                # span[1] = actual comment
+                
+                user = spans[0].contents[0].string # user who submitted the comment
+                time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
+                comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
+                
+                body = spans[1].text # text representation of comment (unformatted)
+                # html of comment, may not be valid
+                pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
+                body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+
+                comment = Comment(comment_id, level, user, time_ago, body, body_html)
+                comments.append(comment)
+            
+        return comments
+        
+    def get_comments(self):
+        """
+        Returns a list of Comment(s) for the given story
+        """
+        soup = get_item_soup(self.story_id)
+        return self._build_comments(soup)
 
 class Comment(object):
     """
     Represents a comment on a post on HN
     """
     
+    def __init__(self, comment_id, level, user, time_ago, body, body_html):
+        self.comment_id = comment_id # the comment's item id
+        self.level = level # commen's nesting level
+        self.user = user # user's name who submitted the post
+        self.time_ago = time_ago # time when it was submitted
+        self.body = body # text representation of comment (unformatted)
+        self.body_html = body_html # html of comment, may not be valid
     
+    def __str__(self):
+        """
+        Return string representation of a comment
+        """
+        return '"{0}..." by {1}'.format(self.body[:min(30, len(self.body))], self.user)
+    
+    def __repr__(self):
+        """
+        A string representation of the class object
+        """
+        return '<Comment: ID={0}>'.format(self.comment_id)

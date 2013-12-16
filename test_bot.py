@@ -4,11 +4,11 @@ from hn import HN
 
 hn = HN()
 
-
+'''
 # print top stories from homepage
 for story in hn.get_stories():
     print(story)
-
+'''
 '''
 # print 10 latest stories
 for story in hn.get_stories(story_type='newest')[:10]:
@@ -27,3 +27,10 @@ print(len(stories))
 
 print(stories)
 '''
+
+# for each story on front page, print top comment
+for story in hn.get_stories():
+    print(story)
+    comments = story.get_comments()
+    print(comments[0] if len(comments) > 0 else 0)
+    print('*' * 10)
