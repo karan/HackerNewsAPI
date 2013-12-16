@@ -229,7 +229,7 @@ class Story(object):
                 ## Builds a flat list of comments
                 
                 # level of comment, starting with 0
-                level = int(row.findChildren('td')[1].find('img').get('width')) / 40
+                level = int(row.findChildren('td')[1].find('img').get('width')) // 40
 
                 spans = row.findChildren('td')[3].findAll('span')
                 # span[0] = submitter details
