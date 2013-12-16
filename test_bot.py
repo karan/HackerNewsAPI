@@ -28,9 +28,21 @@ print(len(stories))
 print(stories)
 '''
 
+'''
 # for each story on front page, print top comment
 for story in hn.get_stories():
     print(story)
     comments = story.get_comments()
     print(comments[0] if len(comments) > 0 else 0)
+    print('*' * 10)
+'''
+
+# for top 5 comments with nesting for top 5 stories
+for story in hn.get_stories()[:5]:
+    print(story)
+    comments = story.get_comments()
+    if len(comments) > 0:
+        for comment in comments[:5]:
+            print('\t' * (comment.level + 1)),
+            print(str(comment))
     print('*' * 10)

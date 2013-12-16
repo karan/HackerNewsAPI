@@ -229,7 +229,7 @@ class Story(object):
                 ## Builds a flat list of comments
                 
                 # level of comment, starting with 0
-                level = int(row.findChildren('td')[1].find('img').get('width'))
+                level = int(row.findChildren('td')[1].find('img').get('width')) / 40
 
                 spans = row.findChildren('td')[3].findAll('span')
                 # span[0] = submitter details
@@ -268,7 +268,7 @@ class Comment(object):
         self.level = level # commen's nesting level
         self.user = user # user's name who submitted the post
         self.time_ago = time_ago # time when it was submitted
-        self.body = body # text representation of comment (unformatted)
+        self.body = body.encode('cp850', errors='replace').decode('cp850') # text representation of comment (unformatted)
         self.body_html = body_html # html of comment, may not be valid
     
     def __str__(self):
