@@ -22,10 +22,15 @@ Installation
     $ pip install HackerNews
 
 
-[Donate](https://www.gittip.com/Karan%20Goel/)
+![](https://blockchain.info/Resources/buttons/donate_64.png)
 =============
 
-If you love and use *HackerNewsAPI*, please consider [donating via gittip](https://www.gittip.com/Karan%20Goel/). Any support is appreciated!
+If Hacker News API has helped you in any way, and you'd like to help the developer, please consider donating.
+
+**- BTC: [19dLDL4ax7xRmMiGDAbkizh6WA6Yei2zP5](http://i.imgur.com/bAQgKLN.png)** *Link to QR code*
+
+**- Flattr: [https://flattr.com/profile/thekarangoel](https://flattr.com/profile/thekarangoel)**
+
 
 Usage
 ==========
@@ -39,10 +44,9 @@ Usage
     
     # print the first 2 pages of newest stories
     for story in hn.get_stories(story_type='newest', page_limit=2):
-        print story["rank"], story["title"]
-        print
+        print story.rank, story.title
 
-Each `story` has the following properties
+Each `Story` has the following properties
 
 - **rank** - the rank of story on the page (keep pagination in mind)
 - **story_id** - the story's id
