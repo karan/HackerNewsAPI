@@ -186,8 +186,8 @@ class Story(object):
     """
     
     def __init__(self, rank, story_id, title, link, domain, points, submitter, 
-                 published_time, submitter_profile, num_comments, comments_link,
-                 is_self):
+                published_time, submitter_profile, num_comments, comments_link,
+               is_self):
         self.rank = rank # the rank of story on the page
         self.story_id = story_id # the story's id
         self.title = title.encode('cp850', errors='replace').decode('cp850') # the title of the story
@@ -200,7 +200,7 @@ class Story(object):
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
         self.is_self = is_self # Truw is a self post
-    
+
     def __str__(self):
         """
         Return string representation of a story
@@ -256,6 +256,7 @@ class Story(object):
         """
         soup = get_item_soup(self.story_id)
         return self._build_comments(soup)
+
 
 class Comment(object):
     """
