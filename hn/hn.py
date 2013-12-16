@@ -201,20 +201,7 @@ class Story(object):
         self.num_comments = num_comments # the number of comments it has
         self.comments_link = comments_link # the link to the comments page
         self.is_self = is_self # Truw is a self post
-    
-    def __str__(self):
-        """
-        Return string representation of a story
-        """
-        return unicode(self).encode('utf-8')
 
-    def __unicode__(self):
-        """
-        Return string representation of a story
-        @ http://stackoverflow.com/questions/20603810/
-        """
-        return u'[{0}] "{1}" by {2}'.format(self.points, self.title, self.submitter)
-    
     def __repr__(self):
         """
         A string representation of the class object
@@ -278,19 +265,7 @@ class Comment(object):
         self.time_ago = time_ago # time when it was submitted
         self.body = body.encode('cp850', errors='replace').decode('cp850') # text representation of comment (unformatted)
         self.body_html = body_html # html of comment, may not be valid
-    
-    def __str__(self):
-        """
-        Return string representation of a story
-        """
-        return unicode(self).encode('utf-8')
 
-    def __unicode__(self):
-        """
-        Return string representation of a story
-        """
-        return u'"{0}..." by {1}'.format(self.body[:min(30, len(self.body))], self.user)
-    
     def __repr__(self):
         """
         A string representation of the class object
