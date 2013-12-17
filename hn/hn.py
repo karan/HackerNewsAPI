@@ -115,13 +115,14 @@ class HN(object):
                 is_self = True
             else:
                 domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
-                
             #-- Get the into about a story --#
 
             #-- Get the detail about a story --#
             detail_cell = detail.findAll('td')[1] # split in 2 cells, we need only second
             detail_concern = detail_cell.contents # list of details we need, 5 count
-
+            
+            num_comments = -1
+            
             if re.match(r'^(\d+)\spoint.*', detail_concern[0].string) is not None:
                 # can be a link or self post
                 points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])

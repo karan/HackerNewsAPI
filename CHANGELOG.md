@@ -1,3 +1,7 @@
+## v1.7.1 (Dec 17, 2013)
+
+- Fix: `UnboundLocalError` on `num_comments`
+
 ## v1.7.0 (Dec 17, 2013)
 
 - Add: Use `Story` class now instead of `dict`

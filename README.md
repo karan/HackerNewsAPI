@@ -3,9 +3,9 @@
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 
 
-| Build Status | Test Coverage | Version |
-| ------------ | ------------- | ------- |
-| [![Build Status](https://travis-ci.org/karan/HackerNewsAPI.png?branch=master)](https://travis-ci.org/karan/HackerNewsAPI) | [![Coverage Status](https://coveralls.io/repos/karan/HackerNewsAPI/badge.png)](https://coveralls.io/r/karan/HackerNewsAPI) | 1.7.0 |
+| Build Status | Test Coverage |
+| ------------ | ------------- |
+| [![Build Status](https://travis-ci.org/karan/HackerNewsAPI.png?branch=master)](https://travis-ci.org/karan/HackerNewsAPI) | [![Coverage Status](https://coveralls.io/repos/karan/HackerNewsAPI/badge.png)](https://coveralls.io/r/karan/HackerNewsAPI) |
 
 Features
 ============

@@ -28,7 +28,7 @@ SOFTWARE.
 """
 
 __title__ = 'hackernews'
-__version__ = '1.7.0'
+__version__ = '1.7.1'
 __author__ = 'Karan Goel'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2013 Karan Goel'
