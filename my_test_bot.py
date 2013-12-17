@@ -7,8 +7,7 @@ hn = HN()
 
 # print top stories from homepage
 for story in hn.get_stories(page_limit=3):
-    print story.title
-    #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
+    print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
 
 '''
 # print 10 latest stories

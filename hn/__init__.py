@@ -27,4 +27,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+__title__ = 'hackernews'
+__version__ = '1.7.0'
+__author__ = 'Karan Goel'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2013 Karan Goel'
+
 from .hn import HN
