@@ -1,11 +1,10 @@
-## v1.7 (Dec 16, 2013)
+## v1.7.0 (Dec 17, 2013)
 
 - Add: Use `Story` class now instead of `dict`
 - Add: Comment scraper (`story.get_comments()`)
 - Fix: Python 3 compatibility
 - Fix: `\xa0` encoding bug
 - Remove: Python 2.6 compatibility
-
 
 ## v1.6.3
 

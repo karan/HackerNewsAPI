@@ -4,11 +4,12 @@ from hn import HN
 
 hn = HN()
 
-'''
+
 # print top stories from homepage
-for story in hn.get_stories():
-    print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
-'''
+for story in hn.get_stories(page_limit=3):
+    print story.title
+    #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
+
 '''
 # print 10 latest stories
 for story in hn.get_stories(story_type='newest')[:10]:
@@ -33,7 +34,7 @@ for story in hn.get_stories():
     print('*' * 10)
 '''
 
-
+'''
 # for top 5 comments with nesting for top 5 stories
 for story in hn.get_stories()[:5]:
     print(story.title)
@@ -42,3 +43,4 @@ for story in hn.get_stories()[:5]:
         for comment in comments[:5]:
             print('\t' * (comment.level + 1) + comment.body[:min(30, len(comment.body))])
     print('*' * 10)
+'''
