@@ -230,15 +230,23 @@ class Story(object):
                 # span[0] = submitter details
                 # [<a href="user?id=jonknee">jonknee</a>, u' 1 hour ago  | ', <a href="item?id=6910978">link</a>]
                 # span[1] = actual comment
+
+                if str(spans[0]) != '<span class="comhead"></span>':
+                    user = spans[0].contents[0].string # user who submitted the comment
+                    time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
+                    comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
                 
-                user = spans[0].contents[0].string # user who submitted the comment
-                time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
-                comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
-                
-                body = spans[1].text # text representation of comment (unformatted)
-                # html of comment, may not be valid
-                pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
-                body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+                    body = spans[1].text # text representation of comment (unformatted)
+                    # html of comment, may not be valid
+                    pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
+                    body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+                else:
+                    # comment deleted
+                    user = ''
+                    time_ago = ''
+                    comment_id = -1
+                    body = '[deleted]'
+                    body_html = '[deleted]'
 
                 comment = Comment(comment_id, level, user, time_ago, body, body_html)
                 comments.append(comment)
