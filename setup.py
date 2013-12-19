@@ -2,10 +2,20 @@ try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+from os import path
+
+
+def get_version():
+    basedir = path.dirname(__file__)
+    with open(path.join(basedir, 'hn/version.py')) as f:
+        locals = {}
+        exec(f.read(), locals)
+        return locals['VERSION']
+    raise RuntimeError('No version info found.')
 
 setup(
     name='HackerNews',
-    version='1.7.1',
+    version=get_version(),
     install_requires=['BeautifulSoup4>=4.3.1', 'requests'],
     author='Karan Goel',
     author_email='karan@goel.im',

@@ -26,9 +26,10 @@ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+from .version import VERSION
 
 __title__ = 'hackernews'
-__version__ = '1.7.1'
+__version__ = VERSION
 __author__ = 'Karan Goel'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2013 Karan Goel'
