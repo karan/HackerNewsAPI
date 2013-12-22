@@ -8,7 +8,8 @@ install:
     - "pip install coveralls --use-mirrors"
 script: "coverage run --source=hn setup.py test"
 script:
-    - python setup.py develop && nosetests -v --with-coverage --cover-package=hn
+    - chmod -R 777 test.sh
+    - ./test.sh
 after_success: "coveralls"
 notifications:
   email: false

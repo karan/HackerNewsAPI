@@ -29,7 +29,6 @@ setup(
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX',
-        'Framework :: Flask',
         'Intended Audience :: Developers',
         'Natural Language :: English',
         'Programming Language :: Python',

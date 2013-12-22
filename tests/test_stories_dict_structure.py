@@ -1,14 +1,13 @@
 
 import sys
+import unittest
 
 from hn import HN
-from nose import with_setup
 
 
-class Test_Stories_Dict(object):
+class TestStoriesDict(unittest.TestCase):
     
-    @classmethod
-    def setup(self):
+    def setUp(self):
         # check py version
         PY2 = sys.version_info[0] == 2
         if not PY2:
@@ -21,12 +20,10 @@ class Test_Stories_Dict(object):
         self.newest_stories = self.hn.get_stories(story_type='newest')
         self.best_stories = self.hn.get_stories(story_type='best')
     
-    @classmethod
-    def teardown(self):
+    def tearDown(self):
         pass
     
     
-    @with_setup(setup, teardown)
     def test_stories_dict_structure_top(self):
         """
         Checks data type of each field of each story from front page.
@@ -47,7 +44,6 @@ class Test_Stories_Dict(object):
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
     
-    @with_setup(setup, teardown)
     def test_stories_dict_structure_newest(self):
         """
         Checks data type of each field of each story from newest page
@@ -68,7 +64,6 @@ class Test_Stories_Dict(object):
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
     
-    @with_setup(setup, teardown)
     def test_stories_dict_structure_best(self):
         """
         Checks data type of each field of each story from best page
@@ -89,23 +84,20 @@ class Test_Stories_Dict(object):
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
     
-    @with_setup(setup, teardown)
     def test_stories_dict_length_top(self):
         """
         Checks if the dict returned by scraping the front page of HN is 30.
         """
-        assert len(self.top_stories) == 30
+        self.assertEqual(len(self.top_stories), 30)
     
-    @with_setup(setup, teardown)
     def test_stories_dict_length_best(self):
         """
         Checks if the dict returned by scraping the best page of HN is 30.
         """
-        assert len(self.best_stories) == 30
+        self.assertEqual(len(self.best_stories), 30)
         
-    @with_setup(setup, teardown)
     def test_stories_dict_length_top_newest(self):
         """
         Checks if the dict returned by scraping the newest page of HN is 30.
         """
-        assert len(self.newest_stories) == 30
+        self.assertEqual(len(self.newest_stories), 30)
