@@ -62,7 +62,7 @@ class HN(object):
         soups.append(get_soup(page)) # get the first page
 
         while len(soups) < page_limit:
-            # get as manu pages as requested
+            # get as many pages as requested
             cur_soup = soups[-1] # get the last seen page's soup
             next_page = self._get_next_page(cur_soup).lstrip('//')
             next_soup = get_soup(next_page) # get the next soup
@@ -104,7 +104,7 @@ class HN(object):
             info_cells = info.findAll('td') # split in 3 cells
 
             rank = int(info_cells[0].string[:-1])
-            title = u'%s' % info_cells[2].find('a').string
+            title = '%s' % info_cells[2].find('a').string
             link = info_cells[2].find('a').get('href')
 
             is_self = False # by default all stories are linking posts
@@ -126,7 +126,7 @@ class HN(object):
             if re.match(r'^(\d+)\spoint.*', detail_concern[0].string) is not None:
                 # can be a link or self post
                 points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
-                submitter = u'%s' % detail_concern[2].string
+                submitter = '%s' % detail_concern[2].string
                 submitter_profile = '%s/%s' % (BASE_URL, detail_concern[2].get('href'))
                 published_time = ' '.join(detail_concern[3].strip().split()[:3])
                 comment_tag = detail_concern[4]
@@ -143,7 +143,7 @@ class HN(object):
                 points = 0
                 submitter = ''
                 submitter_profile = ''
-                published_time = u'%s' % detail_concern[0]
+                published_time = '%s' % detail_concern[0]
                 comment_tag = ''
                 try:
                     story_id = int(re.match(r'.*=(\d+)', link).groups()[0])
@@ -192,7 +192,7 @@ class Story(object):
                is_self):
         self.rank = rank # the rank of story on the page
         self.story_id = story_id # the story's id
-        self.title = title.encode('cp850', errors='replace').decode('cp850') # the title of the story
+        self.title = title # the title of the story
         self.link = link # the url it points to (None for self posts)
         self.domain = domain # the domain of the link (None for self posts)
         self.points = points # the points/karma on the story
@@ -272,7 +272,7 @@ class Comment(object):
         self.level = level # commen's nesting level
         self.user = user # user's name who submitted the post
         self.time_ago = time_ago # time when it was submitted
-        self.body = body.encode('cp850', errors='replace').decode('cp850') # text representation of comment (unformatted)
+        self.body = body # text representation of comment (unformatted)
         self.body_html = body_html # html of comment, may not be valid
 
     def __repr__(self):
