@@ -1,3 +1,8 @@
+## v1.7.2 (Dec 22, 2013)
+
+- Add: `unittest` instead of `nose`
+- Fix: Encoding errors
+
 ## v1.7.1 (Dec 17, 2013)
 
 - Fix: `UnboundLocalError` on `num_comments`
