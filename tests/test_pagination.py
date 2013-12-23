@@ -1,4 +1,5 @@
 import unittest
+import sys
 
 from hn import HN
 from hn import utils
@@ -6,6 +7,8 @@ from hn import utils
 class TestPagination(unittest.TestCase):
 
     def setUp(self):
+        # check py version
+        self.PY2 = sys.version_info[0] == 2
         self.hn = HN()
     
     def tearDown(self):
@@ -51,7 +54,11 @@ class TestPagination(unittest.TestCase):
         """
         soup = utils.get_soup(page='best')
         rows = self.hn._get_zipped_rows(soup)
-        self.assertEqual(len(rows), 30)
+        if self.PY2:
+            self.assertEqual(len(rows), 30)
+        else:
+            rows = [row for row in rows]
+            self.assertEqual(len(rows), 30)
     
     
     def test_pagination_top_for_2_pages(self):
