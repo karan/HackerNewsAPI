@@ -16,5 +16,4 @@ def get_item_soup(story_id):
     """
     Returns a bs4 object of the requested story
     """
-    content = requests.get('%s/item?id=%s' % (BASE_URL, str(story_id))).text
-    return BeautifulSoup(content)
+    return get_soup(str(story_id))

@@ -1,6 +1,7 @@
 import unittest
 
 from hn import HN
+from hn import utils
 
 class TestPagination(unittest.TestCase):
 
@@ -9,6 +10,49 @@ class TestPagination(unittest.TestCase):
     
     def tearDown(self):
         pass
+    
+    def test_more_link_top(self):
+        """
+        Checks if the "More" link at the bottom of homepage works.
+        """
+        soup = utils.get_soup()
+        fnid = self.hn._get_next_page(soup).lstrip('//')
+        expected = 'news2'
+        self.assertEqual(len(fnid), len(expected))
+        
+    def test_more_link_best(self):
+        """
+        Checks if the "More" link at the bottom of best page works.
+        """
+        soup = utils.get_soup(page='best')
+        fnid = self.hn._get_next_page(soup).lstrip('//')
+        expected = 'x?fnid=te9bsVN2BAx0XOpRmUjcY4'
+        self.assertEqual(len(fnid), len(expected))
+        
+    def test_more_link_newest(self):
+        """
+        Checks if the "More" link at the bottom of newest page works.
+        """
+        soup = utils.get_soup(page='newest')
+        fnid = self.hn._get_next_page(soup).lstrip('//')
+        expected = 'x?fnid=te9bsVN2BAx0XOpRmUjcY4'
+        self.assertEqual(len(fnid), len(expected))
+    
+    def test_get_soups_length_best(self):
+        """
+        Checks if appropriate number of soups are returned on best page.
+        """
+        soups = self.hn._get_soups(page='best', page_limit=2)
+        self.assertEqual(len(soups), 2)
+    
+    def test_get_zipped_rows(self):
+        """
+        Tests HN._get_zipped_rows for best page.
+        """
+        soup = utils.get_soup(page='best')
+        rows = self.hn._get_zipped_rows(soup)
+        self.assertEqual(len(rows), 30)
+    
     
     def test_pagination_top_for_2_pages(self):
         """

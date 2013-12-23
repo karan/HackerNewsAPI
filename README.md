@@ -76,7 +76,7 @@ Tests
 
 To run the tests locally just do the following:
 
-    $ chmod 777 test.sh
-    $ ./test.sh
+    $ chmod 777 runtests.sh
+    $ ./runtests.sh
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/karan/hackernewsapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
