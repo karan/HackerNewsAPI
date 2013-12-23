@@ -3,7 +3,7 @@
 Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 
 
-| Build Status | Test Coverage | Version | Downloads (30 days) |
+| Build Status | Test Coverage | Version | Downloads |
 | ------------ | ------------- | ------- | ------------------- |
 | [![Build Status](https://travis-ci.org/karan/HackerNewsAPI.png?branch=master)](https://travis-ci.org/karan/HackerNewsAPI) | [![Coverage Status](https://coveralls.io/repos/karan/HackerNewsAPI/badge.png)](https://coveralls.io/r/karan/HackerNewsAPI) | [![Latest Version](https://pypip.in/v/HackerNews/badge.png)](https://pypi.python.org/pypi/HackerNews/) | [![Downloads](https://pypip.in/d/HackerNews/badge.png)](https://pypi.python.org/pypi/HackerNews/) |
 
@@ -74,8 +74,9 @@ If you want to add any new features, or improve existing ones, feel free to send
 Tests
 =====
 
-To run the tests locally just install the requirements by running `pip install -r requirements.txt`.
+To run the tests locally just do the following:
 
-Then run the command `nosetests -v` in the command line from within the projects root directory.
+    $ chmod 777 test.sh
+    $ ./test.sh
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/karan/hackernewsapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
