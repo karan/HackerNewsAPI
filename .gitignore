@@ -21,6 +21,8 @@ venv
 # ide files
 .idea
 
+loadtests/
+
 # Installer logs
 pip-log.txt
 
