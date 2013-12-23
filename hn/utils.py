@@ -16,4 +16,4 @@ def get_item_soup(story_id):
     """
     Returns a bs4 object of the requested story
     """
-    return get_soup(str(story_id))
+    return get_soup(page='item?id=' + str(story_id))
