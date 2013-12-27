@@ -4,26 +4,19 @@ from hn import HN
 
 hn = HN()
 
-
+top_iter = hn.get_stories(limit=60) # a generator over 60 stories from top page
 
 # print top stories from homepage
-for story in hn.get_stories():
+for story in top_iter:
     print(story.title)
     #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
 
 '''
 # print 10 latest stories
-for story in hn.get_stories(story_type='newest')[:10]:
+for story in hn.get_stories(story_type='newest', limit=10):
     story.title
     print('*' * 50)
     print('')
-
-# print the top 10 stories from /best page
-for story in hn.get_stories(story_type='best')[:10]:
-    print(story.title)
-    print('*' * 50)
-    print('')
-
 '''
 
 '''
@@ -37,7 +30,7 @@ for story in hn.get_stories():
 
 '''
 # for top 5 comments with nesting for top 5 stories
-for story in hn.get_stories()[:5]:
+for story in hn.get_stories(limit=5]:
     print(story.title)
     comments = story.get_comments()
     if len(comments) > 0:

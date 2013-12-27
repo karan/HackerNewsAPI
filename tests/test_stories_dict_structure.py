@@ -16,9 +16,9 @@ class TestStoriesDict(unittest.TestCase):
             self.text_type = [unicode, str]
         
         self.hn = HN()
-        self.top_stories = self.hn.get_stories()
-        self.newest_stories = self.hn.get_stories(story_type='newest')
-        self.best_stories = self.hn.get_stories(story_type='best')
+        self.top_stories = [story for story in self.hn.get_stories()]
+        self.newest_stories = [story for story in self.hn.get_stories(story_type='newest')]
+        self.best_stories = [story for story in self.hn.get_stories(story_type='best')]
     
     def tearDown(self):
         pass

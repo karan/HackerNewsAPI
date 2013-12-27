@@ -40,7 +40,15 @@ class HN(object):
     The class that parses the HN page, and builds up all stories
     """
 
-
+    def __init__(self):
+        self.more = ''
+    
+    def __repr__(self):
+        """
+        A string representation of the class object
+        """
+        return '<HN: more={0}>'.format(self.more)
+        
     def _get_next_page(self, soup):
         """
         Get the relative url of the next page (The "More" link at
@@ -49,30 +57,7 @@ class HN(object):
         table = soup.findChildren('table')[2] # the table with all submissions
         
         # the last row of the table contains the relative url of the next page
-        return table.findChildren(['tr'])[-1].find('a').get('href')
-
-
-    def _get_soups(self, page, page_limit=1):
-        """
-        Returns a list of soups bs4 objects for all pages in the chain starting
-        from 'page' following up to page_limit links.
-        \tpage_limit=1 implies just the top level page
-        """
-        soups = list() # will hold all soups
-        soups.append(get_soup(page)) # get the first page
-
-        while len(soups) < page_limit:
-            # get as many pages as requested
-            cur_soup = soups[-1] # get the last seen page's soup
-            next_page = self._get_next_page(cur_soup).lstrip('//')
-            next_soup = get_soup(next_page) # get the next soup
-            if len(next_soup.findChildren('table')) != 0:
-                # making sure we are on the right page... get it?
-                soups.append(next_soup)
-            else:
-                break
-            time.sleep(INTERVAL_BETWEEN_REQUESTS) # be a good citizen
-        return soups
+        return table.findChildren(['tr'])[-1].find('a').get('href').lstrip('//')
 
     def _get_zipped_rows(self, soup):
         """
@@ -90,7 +75,6 @@ class HN(object):
         detail = [row for (i, row) in enumerate(rows) if (i % 2 != 0)]
         
         return zip(info, detail) # build a list of tuple for all post
-
 
     def _build_story(self, all_rows):
         """
@@ -162,24 +146,36 @@ class HN(object):
         return all_stories
 
 
-    def get_stories(self, story_type='', page_limit=1):
+    def get_stories(self, story_type='', limit=30):
         """
-        Returns a list of stories from the passed page
-        of HN. 'story_type' can be:
-        \t'' = top stories (homepage)
+        Yields a list of stories from the passed page
+        of HN.
+        'story_type' can be:
+        \t'' = top stories (homepage) (default)
         \t'newest' = most recent stories
         \t'best' = best stories
-
-        'page_limit' specifies the maximum number of pages to get.
-        \tpage_limit=1 implies just the top level page
+        
+        'limit' is the number of stories required. Defaults to 30
         """
-        story = list()
-        all_soups = self._get_soups(story_type, page_limit)
-        for soup in all_soups:
+        if limit == None or limit < 30:
+            limit = 30 # we need at least 30 items
+            
+        stories_found = 0
+        
+        # while we still have more stories to find
+        while stories_found < limit:
+            soup = get_soup(page=self.more) # get current page soup
             all_rows = self._get_zipped_rows(soup)
-            story = story + self._build_story(all_rows)
-
-        return story
+            stories = self._build_story(all_rows) # get a list of stories on current page
+            self.more = self._get_next_page(soup) # move to next page
+            
+            for story in stories:
+                yield story
+                stories_found += 1
+                
+                # if enough stories found, return
+                if stories_found == limit:
+                    return
 
 
 class Story(object):
