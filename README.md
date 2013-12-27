@@ -12,7 +12,7 @@ Features
 
 - Compatible with Python 2 (2.7+) and Python 3 (3.3+)
 - Supports 'top', 'newest' and 'best' posts
-- Retrieve comments from posts (flat list for now)
+- Retrieve comments from posts (flat list for now) (`story.get_comments()`)
 - Pagination support
 - Handles external posts, self posts and job posts
 
@@ -30,6 +30,8 @@ If Hacker News API has helped you in any way, and you'd like to help the develop
 **- BTC: [19dLDL4ax7xRmMiGDAbkizh6WA6Yei2zP5](http://i.imgur.com/bAQgKLN.png)** *Link to QR code*
 
 **- Flattr: [https://flattr.com/profile/thekarangoel](https://flattr.com/profile/thekarangoel)**
+
+**- DOGE: DTR3KNm7MidvzxEnPEUbmokHqo45eRD8kj**
 
 
 Usage
@@ -74,7 +76,7 @@ If you want to add any new features, or improve existing ones, feel free to send
 Tests
 =====
 
-To run the tests locally just do the following:
+To run the tests locally just do:
 
     $ chmod 777 runtests.sh
     $ ./runtests.sh

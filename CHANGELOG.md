@@ -1,3 +1,7 @@
+## v1.8.0 (Dec 27, 2013)
+
+- Add: `get_stories()` is now a generator
+
 ## v1.7.2 (Dec 22, 2013)
 
 - Add: `unittest` instead of `nose`
