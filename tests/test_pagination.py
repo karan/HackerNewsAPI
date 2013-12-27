@@ -53,6 +53,12 @@ class TestPagination(unittest.TestCase):
             rows = [row for row in rows]
             self.assertEqual(len(rows), 30)
     
+    def test_pagination_top_for_0_limit(self):
+        """
+        Checks if the pagination works for 0 limit.
+        """
+        stories = [story for story in self.hn.get_stories(limit=0)]
+        self.assertEqual(len(stories), 30)
     
     def test_pagination_top_for_2_pages(self):
         """

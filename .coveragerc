@@ -3,3 +3,23 @@ omit =
     */python?.?/*
     */site-packages/*
     */test*
+
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    def __init__
+    num_comments = 0
+    points = 0
+    submitter = ''
+    submitter_profile = ''
+    published_time = '%s' % detail_concern[0]
+    comment_tag = ''
+    story_id = int(re.match(r'.*=(\d+)', link).groups()[0])
+    story_id = -1
+    comments_link = ''
+    comment_count = -1
+
+    if 0:
+    if __name__ == .__main__.:

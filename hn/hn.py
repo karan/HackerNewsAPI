@@ -42,13 +42,7 @@ class HN(object):
 
     def __init__(self):
         self.more = ''
-    
-    def __repr__(self):
-        """
-        A string representation of the class object
-        """
-        return '<HN: more={0}>'.format(self.more)
-        
+
     def _get_next_page(self, soup):
         """
         Get the relative url of the next page (The "More" link at

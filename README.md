@@ -43,8 +43,8 @@ Usage
     hn = HN()
     
     # print the first 2 pages of newest stories
-    for story in hn.get_stories(story_type='newest', page_limit=2):
-        print story.rank, story.title
+    for story in hn.get_stories(story_type='newest', limit=60):
+        print(story.rank, story.title)
 
 Each `Story` has the following properties
 
