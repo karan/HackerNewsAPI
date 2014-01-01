@@ -212,6 +212,10 @@ class Story(object):
         if len(rows) > 1:
             for row in rows:
 
+                # skip an empty td
+                if not row.findChildren('td'):
+                    continue
+
                 ## Builds a flat list of comments
 
                 # level of comment, starting with 0
