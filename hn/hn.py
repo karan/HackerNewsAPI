@@ -49,7 +49,7 @@ class HN(object):
         the bottom of the page)
         """
         table = soup.findChildren('table')[2] # the table with all submissions
-        
+
         # the last row of the table contains the relative url of the next page
         return table.findChildren(['tr'])[-1].find('a').get('href').lstrip('//')
 
@@ -67,7 +67,7 @@ class HN(object):
         info = [row for (i, row) in enumerate(rows) if (i % 2 == 0)]
         # points, submitter, comments
         detail = [row for (i, row) in enumerate(rows) if (i % 2 != 0)]
-        
+
         return zip(info, detail) # build a list of tuple for all post
 
     def _build_story(self, all_rows):
@@ -98,9 +98,9 @@ class HN(object):
             #-- Get the detail about a story --#
             detail_cell = detail.findAll('td')[1] # split in 2 cells, we need only second
             detail_concern = detail_cell.contents # list of details we need, 5 count
-            
+
             num_comments = -1
-            
+
             if re.match(r'^(\d+)\spoint.*', detail_concern[0].string) is not None:
                 # can be a link or self post
                 points = int(re.match(r'^(\d+)\spoint.*', detail_concern[0].string).groups()[0])
@@ -131,12 +131,12 @@ class HN(object):
                 comment_count = -1
             #-- Get the detail about a story --#
 
-            story = Story(rank, story_id, title, link, domain, points, submitter, 
+            story = Story(rank, story_id, title, link, domain, points, submitter,
                  published_time, submitter_profile, num_comments, comments_link,
                  is_self)
-            
+
             all_stories.append(story)
-        
+
         return all_stories
 
 
@@ -148,25 +148,25 @@ class HN(object):
         \t'' = top stories (homepage) (default)
         \t'newest' = most recent stories
         \t'best' = best stories
-        
+
         'limit' is the number of stories required. Defaults to 30
         """
         if limit == None or limit < 30:
             limit = 30 # we need at least 30 items
-            
+
         stories_found = 0
-        
+
         # while we still have more stories to find
         while stories_found < limit:
             soup = get_soup(page=self.more) # get current page soup
             all_rows = self._get_zipped_rows(soup)
             stories = self._build_story(all_rows) # get a list of stories on current page
             self.more = self._get_next_page(soup) # move to next page
-            
+
             for story in stories:
                 yield story
                 stories_found += 1
-                
+
                 # if enough stories found, return
                 if stories_found == limit:
                     return
@@ -176,8 +176,8 @@ class Story(object):
     """
     Story class represents one single story on HN
     """
-    
-    def __init__(self, rank, story_id, title, link, domain, points, submitter, 
+
+    def __init__(self, rank, story_id, title, link, domain, points, submitter,
                 published_time, submitter_profile, num_comments, comments_link,
                is_self):
         self.rank = rank # the rank of story on the page
@@ -198,7 +198,7 @@ class Story(object):
         A string representation of the class object
         """
         return '<Story: ID={0}>'.format(self.story_id)
-    
+
     def _build_comments(self, soup):
         """
         For the story, builds and returns a list of Comment objects.
@@ -206,14 +206,14 @@ class Story(object):
         table = soup.findChildren('table')[3] # the table holding all comments
         rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
         rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
-        
+
         comments = []
-        
+
         if len(rows) > 1:
             for row in rows:
-                
+
                 ## Builds a flat list of comments
-                
+
                 # level of comment, starting with 0
                 level = int(row.findChildren('td')[1].find('img').get('width')) // 40
 
@@ -226,7 +226,7 @@ class Story(object):
                     user = spans[0].contents[0].string # user who submitted the comment
                     time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
                     comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
-                
+
                     body = spans[1].text # text representation of comment (unformatted)
                     # html of comment, may not be valid
                     pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
@@ -241,9 +241,9 @@ class Story(object):
 
                 comment = Comment(comment_id, level, user, time_ago, body, body_html)
                 comments.append(comment)
-            
+
         return comments
-        
+
     def get_comments(self):
         """
         Returns a list of Comment(s) for the given story
@@ -256,7 +256,7 @@ class Comment(object):
     """
     Represents a comment on a post on HN
     """
-    
+
     def __init__(self, comment_id, level, user, time_ago, body, body_html):
         self.comment_id = comment_id # the comment's item id
         self.level = level # commen's nesting level
