@@ -6,11 +6,12 @@ hn = HN()
 
 top_iter = hn.get_stories(limit=60) # a generator over 60 stories from top page
 
+'''
 # print top stories from homepage
 for story in top_iter:
     print(story.title)
     #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
-
+'''
 '''
 # print 10 latest stories
 for story in hn.get_stories(story_type='newest', limit=10):
@@ -28,13 +29,12 @@ for story in hn.get_stories():
     print('*' * 10)
 '''
 
-'''
-# for top 5 comments with nesting for top 5 stories
-for story in hn.get_stories(limit=5]:
+
+# print top 5 comments with nesting for top 5 stories
+for story in hn.get_stories(story_type='best', limit=5):
     print(story.title)
     comments = story.get_comments()
     if len(comments) > 0:
         for comment in comments[:5]:
             print('\t' * (comment.level + 1) + comment.body[:min(30, len(comment.body))])
     print('*' * 10)
-'''

@@ -205,6 +205,7 @@ class Story(object):
         """
         table = soup.findChildren('table')[3] # the table holding all comments
         rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
+        rows = rows[:len(rows) - 2] # last row is more, second last is spacing
         rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
         
         comments = []

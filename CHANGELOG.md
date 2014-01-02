@@ -1,3 +1,8 @@
+## v1.8.1 (Jan 1, 2013)
+
+- Fix: `IndexError` on `get_comments` - Issue #24
+- Fix: Error on empty `td`
+
 ## v1.8.0 (Dec 27, 2013)
 
 - Add: `get_stories()` is now a generator
