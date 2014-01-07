@@ -203,6 +203,14 @@ class Story(object):
         """
         For the story, builds and returns a list of Comment objects.
         """
+        '''
+        if not self.rank:
+            # this post has not been scraped, so we explititly get all info
+            info_table = soup.findChildren('table')[3] # to extract meta information about the post
+            info_rows = info_table.findChildren('tr')
+            
+            title_row = info_rows[0].findChildren('td') # title, domain
+        '''
         table = soup.findChildren('table')[3] # the table holding all comments
         rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
         rows = rows[:len(rows) - 2] # last row is more, second last is spacing
@@ -249,11 +257,16 @@ class Story(object):
 
         return comments
 
-    def get_comments(self):
+    def get_comments(self, item_id=None):
         """
         Returns a list of Comment(s) for the given story
         """
-        soup = get_item_soup(self.story_id)
+        if item_id:
+            # get details about a particular story
+            soup = get_item_soup(item_id)
+        else:
+            # or use a Story object
+            soup = get_item_soup(self.story_id)
         return self._build_comments(soup)
 
 
