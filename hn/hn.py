@@ -251,7 +251,7 @@ class Story(object):
         return comments
     
     @classmethod
-    def fromid(item_id):
+    def fromid(self, item_id):
         """
         Initializes an instance of Story for given item_id.
         It is assumed that the story referenced by item_id is valid
@@ -263,35 +263,42 @@ class Story(object):
         soup = get_item_soup(item_id)
         
         # this post has not been scraped, so we explititly get all info
-        self.story_id = item_id
-        self.rank = -1
+        story_id = item_id
+        rank = -1
         
         info_table = soup.findChildren('table')[2] # to extract meta information about the post
         info_rows = info_table.findChildren('tr') # [0] = title, domain, [1] = points, user, time, comments
         
         title_row = info_rows[0].findChildren('td')[1] # title, domain
-        self.title = title_row.find('a').text
+        title = title_row.find('a').text
         try:
-            self.domain = title_row.find('span').string[2:-2]
+            domain = title_row.find('span').string[2:-2]
             # domain found
-            self.is_self = False
-            self.link = title_row.find('a').get('href')
+            is_self = False
+            link = title_row.find('a').get('href')
         except AttributeError:
             # self post
-            self.domain = BASE_URL
-            self.is_self = True
-            self.link = '%s/item?id=%s' % (BASE_URL, item_id)
+            domain = BASE_URL
+            is_self = True
+            link = '%s/item?id=%s' % (BASE_URL, item_id)
         
         meta_row = info_rows[1].findChildren('td')[1].contents # points, user, time, comments
         # [<span id="score_7024626">789 points</span>, u' by ', <a href="user?id=endianswap">endianswap</a>,
         # u' 8 hours ago  | ', <a href="item?id=7024626">238 comments</a>]
 
-        self.points = int(re.match(r'^(\d+)\spoint.*', meta_row[0].text).groups()[0])
-        self.submitter = meta_row[2].text
-        self.submitter_profile = '%s/%s' % (BASE_URL, meta_row[2].get('href'))
-        self.published_time = ' '.join(meta_row[3].strip().split()[:3])
-        self.comments_link = '%s/item?id=%d' % (BASE_URL, item_id)
-        self.num_comments = int(re.match(r'(\d+)\s.*', meta_row[4].text).groups()[0])
+        points = int(re.match(r'^(\d+)\spoint.*', meta_row[0].text).groups()[0])
+        submitter = meta_row[2].text
+        submitter_profile = '%s/%s' % (BASE_URL, meta_row[2].get('href'))
+        published_time = ' '.join(meta_row[3].strip().split()[:3])
+        comments_link = '%s/item?id=%s' % (BASE_URL, item_id)
+        try:
+            num_comments = int(re.match(r'(\d+)\s.*', meta_row[4].text).groups()[0])
+        except AttributeError:
+            num_comments = 0
+        story = Story(rank, story_id, title, link, domain, points, submitter,
+                published_time, submitter_profile, num_comments, comments_link,
+               is_self)
+        return story
 
     def get_comments(self):
         """
