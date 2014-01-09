@@ -256,6 +256,7 @@ class Story(object):
         Initializes an instance of Story for given item_id.
         It is assumed that the story referenced by item_id is valid
         and does not raise any HTTP errors.
+        item_id is an int.
         """
         if not item_id:
             raise Exception('Need an item_id for a story')
