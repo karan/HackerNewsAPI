@@ -15,6 +15,7 @@ Features
 - Retrieve comments from posts (flat list for now) (`story.get_comments()`)
 - Pagination support
 - Handles external posts, self posts and job posts
+- Get post details for any post (`Story.fromid('7024626')`)
 
 Installation
 ============
