@@ -9,7 +9,7 @@ class TestStory(unittest.TestCase):
     
     def setUp(self):
         self.PY2 = sys.version_info[0] == 2
-        if not PY2:
+        if not self.PY2:
             self.text_type = [str]
         else:
             self.text_type = [unicode, str]
@@ -18,18 +18,12 @@ class TestStory(unittest.TestCase):
     def tearDown(self):
         pass
     
-    def test_story_repr(self):
-        """
-        Check string repr of the story.
-        """
-        self.assertEqual(self.story, '<Story: ID=6115341>')
-    
     def test_story_data_types(self):
         """
         Test types of fields of a Story object
         """
         assert type(self.story.rank) == int
-        assert type(self.story.self.story_id) == int
+        assert type(self.story.story_id) == int
         assert type(self.story.title) in self.text_type
         assert type(self.story.link) in self.text_type
         assert type(self.story.domain) in self.text_type
@@ -40,3 +34,19 @@ class TestStory(unittest.TestCase):
         assert type(self.story.num_comments) == int
         assert type(self.story.comments_link) in self.text_type
         assert type(self.story.is_self) == bool
+    
+    def test_comment_count(self):
+        """
+        Checks the number of comments in the story.
+        Hopefully no one will comment on the story in future.
+        """
+        self.assertEqual(self.story.num_comments, 4)
+    
+    def test_story_submitter(self):
+        """
+        Tests the author name
+        """
+        self.assertEqual(self.story.submitter, 'karangoeluw')
+        
+if __name__ == '__main__':
+    unittest.main()
