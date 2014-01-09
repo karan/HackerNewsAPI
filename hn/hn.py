@@ -204,19 +204,6 @@ class Story(object):
         For the story, builds and returns a list of Comment objects.
         """
         
-        if not self.rank:
-            # this post has not been scraped, so we explititly get all info
-            info_table = soup.findChildren('table')[2] # to extract meta information about the post
-            info_rows = info_table.findChildren('tr')
-            
-            title_row = info_rows[0].findChildren('td') # title, domain
-            title = title_row.find('a').text
-            try:
-                domain = title_row.find('span').string[2:-2]
-            except:
-                # self post
-                domain = BASE_URL
-        
         table = soup.findChildren('table')[3] # the table holding all comments
         rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
         rows = rows[:len(rows) - 2] # last row is more, second last is spacing
@@ -262,17 +249,55 @@ class Story(object):
                 comments.append(comment)
 
         return comments
+    
+    @classmethod
+    def fromid(item_id):
+        """
+        Initializes an instance of Story for given item_id.
+        It is assumed that the story referenced by item_id is valid
+        and does not raise any HTTP errors.
+        """
+        if not item_id:
+            raise Exception('Need an item_id for a story')
+        # get details about a particular story
+        soup = get_item_soup(item_id)
+        
+        # this post has not been scraped, so we explititly get all info
+        self.story_id = item_id
+        self.rank = -1
+        
+        info_table = soup.findChildren('table')[2] # to extract meta information about the post
+        info_rows = info_table.findChildren('tr') # [0] = title, domain, [1] = points, user, time, comments
+        
+        title_row = info_rows[0].findChildren('td')[1] # title, domain
+        self.title = title_row.find('a').text
+        try:
+            self.domain = title_row.find('span').string[2:-2]
+            # domain found
+            self.is_self = False
+            self.link = title_row.find('a').get('href')
+        except AttributeError:
+            # self post
+            self.domain = BASE_URL
+            self.is_self = True
+            self.link = '%s/item?id=%s' % (BASE_URL, item_id)
+        
+        meta_row = info_rows[1].findChildren('td')[1].contents # points, user, time, comments
+        # [<span id="score_7024626">789 points</span>, u' by ', <a href="user?id=endianswap">endianswap</a>,
+        # u' 8 hours ago  | ', <a href="item?id=7024626">238 comments</a>]
 
-    def get_comments(self, item_id=None):
+        self.points = int(re.match(r'^(\d+)\spoint.*', meta_row[0].text).groups()[0])
+        self.submitter = meta_row[2].text
+        self.submitter_profile = '%s/%s' % (BASE_URL, meta_row[2].get('href'))
+        self.published_time = ' '.join(meta_row[3].strip().split()[:3])
+        self.comments_link = '%s/item?id=%d' % (BASE_URL, item_id)
+        self.num_comments = int(re.match(r'(\d+)\s.*', meta_row[4].text).groups()[0])
+
+    def get_comments(self):
         """
         Returns a list of Comment(s) for the given story
         """
-        if item_id:
-            # get details about a particular story
-            soup = get_item_soup(item_id)
-        else:
-            # or use a Story object
-            soup = get_item_soup(self.story_id)
+        soup = get_item_soup(self.story_id)
         return self._build_comments(soup)
 
 
