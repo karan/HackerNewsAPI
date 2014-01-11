@@ -35,13 +35,6 @@ class TestStory(unittest.TestCase):
         assert type(self.story.comments_link) in self.text_type
         assert type(self.story.is_self) == bool
     
-    def test_comment_count(self):
-        """
-        Checks the number of comments in the story.
-        Hopefully no one will comment on the story in future.
-        """
-        self.assertEqual(self.story.num_comments, 4)
-    
     def test_story_submitter(self):
         """
         Tests the author name
