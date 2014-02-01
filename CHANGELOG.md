@@ -1,4 +1,8 @@
-## v1.8.1 (Jan 1, 2013)
+## v1.8.2 (Jan 31, 2014)
+
+- New: Build stories from id (`Story.fromid(6115341)`)
+
+## v1.8.1 (Jan 1, 2014)
 
 - Fix: `IndexError` on `get_comments` - Issue #24
 - Fix: Error on empty `td`
