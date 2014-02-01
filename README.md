@@ -28,11 +28,7 @@ Installation
 
 If Hacker News API has helped you in any way, and you'd like to help the developer, please consider donating.
 
-**- BTC: [19dLDL4ax7xRmMiGDAbkizh6WA6Yei2zP5](http://i.imgur.com/bAQgKLN.png)** *Link to QR code*
-
 **- Flattr: [https://flattr.com/profile/thekarangoel](https://flattr.com/profile/thekarangoel)**
-
-**- DOGE: DTR3KNm7MidvzxEnPEUbmokHqo45eRD8kj**
 
 
 Usage
