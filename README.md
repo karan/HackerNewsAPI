@@ -34,7 +34,7 @@ Usage
     from hn import HN
 
     hn = HN()
-    
+
     # print the first 2 pages of newest stories
     for story in hn.get_stories(story_type='newest', limit=60):
         print(story.rank, story.title)
@@ -135,6 +135,10 @@ To run the tests locally just do:
 
     $ chmod 777 runtests.sh
     $ ./runtests.sh
+
+To run individual tests,
+
+    $ python -m unittest tests.<module name>
 
 
 Donations
