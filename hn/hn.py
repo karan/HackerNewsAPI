@@ -1,5 +1,9 @@
 #!/usr/bin/env python
+
 """
+Hacker News API
+Unofficial Python API for Hacker News.
+
 @author Karan Goel
 @email karan@goel.im
 

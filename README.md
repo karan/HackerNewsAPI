@@ -7,6 +7,7 @@ Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 | ------------ | ------------- | ------- | ------------------- |
 | [![Build Status](https://travis-ci.org/karan/HackerNewsAPI.png?branch=master)](https://travis-ci.org/karan/HackerNewsAPI) | [![Coverage Status](https://coveralls.io/repos/karan/HackerNewsAPI/badge.png)](https://coveralls.io/r/karan/HackerNewsAPI) | [![Latest Version](https://pypip.in/v/HackerNews/badge.png)](https://pypi.python.org/pypi/HackerNews/) | [![Downloads](https://pypip.in/d/HackerNews/badge.png)](https://pypi.python.org/pypi/HackerNews/) |
 
+
 Features
 ============
 
@@ -17,18 +18,11 @@ Features
 - Handles external posts, self posts and job posts
 - Get post details for any post (`Story.fromid(7024626)`)
 
+
 Installation
 ============
 
     $ pip install HackerNews
-
-
-![](https://blockchain.info/Resources/buttons/donate_64.png)
-=============
-
-If Hacker News API has helped you in any way, and you'd like to help the developer, please consider donating.
-
-**- Flattr: [https://flattr.com/profile/thekarangoel](https://flattr.com/profile/thekarangoel)**
 
 
 Usage
@@ -45,6 +39,31 @@ Usage
     for story in hn.get_stories(story_type='newest', limit=60):
         print(story.rank, story.title)
 
+
+API Reference
+==============
+
+## Class: `HN`
+
+### Get stories from Hacker News
+
+#### `get_stories`
+
+**Parameters:**
+
+| Name | Type | Required | Description | Default |
+| ---- | ---- | -------- | ----------- | ------- |
+| `story_type` | string | No | Returns the stories from this page. One of `''`, `'newest'`, `'best'` | `''` (top) |
+| `limit` | integer | No | Return only at most these many stories, at least 30 | 30 |
+
+**Example:**
+
+	from hn import HN
+	hn = HN()
+	hn.get_stories(story_type='newest', limit=10)
+
+## Class: `Story`
+
 Each `Story` has the following properties
 
 - **rank** - the rank of story on the page (keep pagination in mind)
@@ -60,15 +79,54 @@ Each `Story` has the following properties
 - **num_comments** - the number of comments a story has
 - **comments_link** - the link to the comments page
 
-Example
+### Make an object from the ID of a story
+
+#### `fromid`
+
+**Parameters:**
+
+| Name | Type | Required | Description | Default |
+| ---- | ---- | -------- | ----------- | ------- |
+| `item_id` | integer | Yes | Initializes an instance of Story for given item_id. Must be a valid story id. |  |
+
+**Example:**
+
+	from hn import Story
+	story = Story.fromid(6374031)
+	print story.title
+
+### Get a list of Comment's for this story
+
+#### `get_comments`
+
+**Parameters:**
+
+| Name | Type | Required | Description | Default |
+| ---- | ---- | -------- | ----------- | ------- |
+|  |  |  |  |  |
+
+**Example:**
+
+	from hn import Story
+	story = Story.fromid(6374031)
+	comments = story.get_comments()
+
+## Class: `Comment`
+
+Each `Comment` has the following properties
+
+- **comment_id** - the comment's item id
+- **level** - commen's nesting level
+- **user** - user's name who submitted the post
+- **time_ago** - time when it was submitted
+- **body** - text representation of comment (unformatted)
+- **body_html** - html of comment, may not be valid
+
+Examples
 ========
 
 See [`my_test_bot.py`](https://github.com/karan/HackerNewsAPI/blob/master/my_test_bot.py)
 
-Contribute
-========
-
-If you want to add any new features, or improve existing ones, feel free to send a pull request!
 
 Tests
 =====
@@ -78,4 +136,18 @@ To run the tests locally just do:
     $ chmod 777 runtests.sh
     $ ./runtests.sh
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/karan/hackernewsapi/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+Donations
+=============
+
+If HackerNewsAPI has helped you in any way, and you'd like to help the developer, please consider donating.
+
+**- BTC: [19dLDL4ax7xRmMiGDAbkizh6WA6Yei2zP5](http://i.imgur.com/bAQgKLN.png)**
+
+**- Flattr: [https://flattr.com/profile/thekarangoel](https://flattr.com/profile/thekarangoel)**
+
+
+Contribute
+========
+
+If you want to add any new features, or improve existing ones, feel free to send a pull request!
