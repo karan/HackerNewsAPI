@@ -35,8 +35,8 @@ SOFTWARE.
 import re
 import time
 
-from utils import get_soup, get_item_soup
-from constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
+from .utils import get_soup, get_item_soup
+from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
 
 class HN(object):
@@ -175,7 +175,7 @@ class HN(object):
                 if stories_found == limit:
                     return
 
-    def get_hackernews_leaders(self, limit=10):
+    def get_leaders(self, limit=10):
         """ Return the leaders of Hacker News """
         if limit == None:
             limit = 10
