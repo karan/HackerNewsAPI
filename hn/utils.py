@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
+from constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
 def get_soup(page=''):
     """

@@ -35,8 +35,8 @@ SOFTWARE.
 import re
 import time
 
-from .utils import get_soup, get_item_soup
-from .constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
+from utils import get_soup, get_item_soup
+from constants import BASE_URL, INTERVAL_BETWEEN_REQUESTS
 
 
 class HN(object):
@@ -175,6 +175,21 @@ class HN(object):
                 if stories_found == limit:
                     return
 
+    def get_hackernews_leaders(self, limit=10):
+        """ Return the leaders of Hacker News """
+        if limit == None:
+            limit = 10
+        soup = get_soup('leaders')
+        table = soup.find('table')
+        leaders_table = table.find_all('table')[1]
+        listLeaders = leaders_table.find_all('tr')[2:]
+        listLeaders.pop(10) # Removing because empty in the Leaders page
+        for i, leader in enumerate(listLeaders):
+            if (i == limit): 
+                return
+            if not leader.text == '':
+                item = leader.find_all('td')
+                yield User(item[1].text,'', item[2].text, item[3].text)
 
 class Story(object):
     """
@@ -331,3 +346,18 @@ class Comment(object):
         A string representation of the class object
         """
         return '<Comment: ID={0}>'.format(self.comment_id)
+
+class User(object):
+    """
+    Represents a User on HN
+    """
+
+    def __init__(self, username, date_created,karma, avg):
+        self.username = username
+        self.date_created = date_created
+        self.karma = karma
+        self.avg = avg
+
+    def __repr__(self):
+        return '{0} {1} {2}'.format(self.username, self.karma, self.avg)
+
