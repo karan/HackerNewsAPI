@@ -214,11 +214,9 @@ class Story(object):
             table = soup.findChildren('table')[3]
         elif current_page > 1:
             table = soup.findChildren('table')[2]
-        # print "table:", table
 
         # the last row of the table contains the relative url of the next page
         anchor = table.findChildren(['tr'])[-1].find('a')
-        print "anchor:", anchor
         if anchor and anchor.text == u'More':
             return anchor.get('href').lstrip('//')
         else:
@@ -230,14 +228,15 @@ class Story(object):
         """
 
         comments = []
-        current_page = 1  # Updated at bottom of following while loop
+        current_page = 1
 
         while True:
-            print "Number of tables:", len(soup.findChildren('table'))
+            # Get the table holding all comments:
             if current_page == 1:
-                table = soup.findChildren('table')[3] # the table holding all comments
+                table = soup.findChildren('table')[3]
             elif current_page > 1:
                 table = soup.findChildren('table')[2]
+
             rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
             rows = rows[:len(rows) - 2] # last row is more, second last is spacing
             rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
@@ -282,12 +281,11 @@ class Story(object):
             # Move on to the next page of comments, or exit the loop if there
             # is no next page.
             next_page_url = self._get_next_page(soup, current_page)
-            current_page += 1
-            # print "next page url:", next_page_url
-            print "current len(comments:", len(comments)
             if not next_page_url:
                 break
+
             soup = get_soup(page=next_page_url)
+            current_page += 1
 
         return comments
     
