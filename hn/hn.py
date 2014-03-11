@@ -203,54 +203,91 @@ class Story(object):
         """
         return '<Story: ID={0}>'.format(self.story_id)
 
+    def _get_next_page(self, soup, current_page):
+        """
+        Get the relative url of the next page (The "More" link at
+        the bottom of the page)
+        """
+
+        # Get the table with all the comments:
+        if current_page == 1:
+            table = soup.findChildren('table')[3]
+        elif current_page > 1:
+            table = soup.findChildren('table')[2]
+        # print "table:", table
+
+        # the last row of the table contains the relative url of the next page
+        anchor = table.findChildren(['tr'])[-1].find('a')
+        print "anchor:", anchor
+        if anchor and anchor.text == u'More':
+            return anchor.get('href').lstrip('//')
+        else:
+            return None
+
     def _build_comments(self, soup):
         """
         For the story, builds and returns a list of Comment objects.
         """
-        
-        table = soup.findChildren('table')[3] # the table holding all comments
-        rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
-        rows = rows[:len(rows) - 2] # last row is more, second last is spacing
-        rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
 
         comments = []
+        current_page = 1  # Updated at bottom of following while loop
 
-        if len(rows) > 1:
-            for row in rows:
+        while True:
+            print "Number of tables:", len(soup.findChildren('table'))
+            if current_page == 1:
+                table = soup.findChildren('table')[3] # the table holding all comments
+            elif current_page > 1:
+                table = soup.findChildren('table')[2]
+            rows = table.findChildren(['tr']) # get all rows (each comment is duplicated twice)
+            rows = rows[:len(rows) - 2] # last row is more, second last is spacing
+            rows = [row for i, row in enumerate(rows) if (i % 2 == 0)] # now we have unique comments only
 
-                # skip an empty td
-                if not row.findChildren('td'):
-                    continue
+            if len(rows) > 1:
+                for row in rows:
 
-                ## Builds a flat list of comments
+                    # skip an empty td
+                    if not row.findChildren('td'):
+                        continue
 
-                # level of comment, starting with 0
-                level = int(row.findChildren('td')[1].find('img').get('width')) // 40
+                    ## Builds a flat list of comments
 
-                spans = row.findChildren('td')[3].findAll('span')
-                # span[0] = submitter details
-                # [<a href="user?id=jonknee">jonknee</a>, u' 1 hour ago  | ', <a href="item?id=6910978">link</a>]
-                # span[1] = actual comment
+                    # level of comment, starting with 0
+                    level = int(row.findChildren('td')[1].find('img').get('width')) // 40
 
-                if str(spans[0]) != '<span class="comhead"></span>':
-                    user = spans[0].contents[0].string # user who submitted the comment
-                    time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
-                    comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
+                    spans = row.findChildren('td')[3].findAll('span')
+                    # span[0] = submitter details
+                    # [<a href="user?id=jonknee">jonknee</a>, u' 1 hour ago  | ', <a href="item?id=6910978">link</a>]
+                    # span[1] = actual comment
 
-                    body = spans[1].text # text representation of comment (unformatted)
-                    # html of comment, may not be valid
-                    pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
-                    body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
-                else:
-                    # comment deleted
-                    user = ''
-                    time_ago = ''
-                    comment_id = -1
-                    body = '[deleted]'
-                    body_html = '[deleted]'
+                    if str(spans[0]) != '<span class="comhead"></span>':
+                        user = spans[0].contents[0].string # user who submitted the comment
+                        time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
+                        comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
 
-                comment = Comment(comment_id, level, user, time_ago, body, body_html)
-                comments.append(comment)
+                        body = spans[1].text # text representation of comment (unformatted)
+                        # html of comment, may not be valid
+                        pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
+                        body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+                    else:
+                        # comment deleted
+                        user = ''
+                        time_ago = ''
+                        comment_id = -1
+                        body = '[deleted]'
+                        body_html = '[deleted]'
+
+                    comment = Comment(comment_id, level, user, time_ago, body, body_html)
+                    comments.append(comment)
+
+            # Move on to the next page of comments, or exit the loop if there
+            # is no next page.
+            next_page_url = self._get_next_page(soup, current_page)
+            current_page += 1
+            # print "next page url:", next_page_url
+            print "current len(comments:", len(comments)
+            if not next_page_url:
+                break
+            soup = get_soup(page=next_page_url)
 
         return comments
     
