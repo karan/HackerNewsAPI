@@ -17,7 +17,7 @@ class TestStoryGetComments(unittest.TestCase):
         Tests whether or not len(get_comments) > 90 if there are multiple pages
         of comments.
         """
-        comments = story.get_comments()
+        comments = self.story.get_comments()
         soup = utils.get_item_soup(7324236)
         for anchor in soup.find_all('a'):
             if 'More' in anchor.text:
@@ -36,7 +36,7 @@ class TestStoryGetComments(unittest.TestCase):
         """
         Tests for null comments.
         """
-        comments = story.get_comments()
+        comments = self.story.get_comments()
         comment = comments[randrange(0, len(comments))]
         self.assertTrue(bool(comment.body))
         self.assertTrue(bool(comment.body_html))
