@@ -302,6 +302,14 @@ class Story(object):
             soup = get_soup(page=next_page_url)
             current_page += 1
 
+        previous_comment = None
+        for comment in comments:
+            if comment.level == 0:
+                previous_comment = comment
+            else:
+                level_difference = comment.level - previous_comment.level
+                previous_comment.body_html += '\n' + '\t' * level_difference + comment.body_html
+                previous_comment.body += '\n' + '\t' * level_difference + comment.body         
         return comments
     
     @classmethod
