@@ -53,7 +53,6 @@ class HN(object):
         the bottom of the page)
         """
         table = soup.findChildren('table')[2] # the table with all submissions
-
         # the last row of the table contains the relative url of the next page
         return table.findChildren(['tr'])[-1].find('a').get('href').lstrip('//')
 
@@ -159,7 +158,7 @@ class HN(object):
             limit = 30 # we need at least 30 items
 
         stories_found = 0
-
+        self.more = story_type
         # while we still have more stories to find
         while stories_found < limit:
             soup = get_soup(page=self.more) # get current page soup
