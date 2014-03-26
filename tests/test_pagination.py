@@ -1,10 +1,19 @@
 import unittest
 import sys
+import os
 
 from hn import HN
 from hn import utils
 
-class TestPagination(unittest.TestCase):
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
+
+class TestPagination(RemoteTestCase):
 
     def setUp(self):
         # check py version
@@ -80,6 +89,7 @@ class TestPagination(unittest.TestCase):
         """
         stories = [story for story in self.hn.get_stories(story_type='best', limit=2*30)]
         self.assertEqual(len(stories), 2 * 30)
+
 
 if __name__ == '__main__':
     unittest.main()

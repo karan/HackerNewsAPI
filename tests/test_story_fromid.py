@@ -1,10 +1,19 @@
 import unittest
 import sys
+import os
 
 from hn import HN, Story
 from hn import utils
 
-class TestStoryFromId(unittest.TestCase):
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
+
+class TestStoryFromId(RemoteTestCase):
 
     def setUp(self):
         # check py version
@@ -32,3 +41,7 @@ class TestStoryFromId(unittest.TestCase):
         self.assertEqual(len(comments), 31)
         self.assertEqual(comments[0].comment_id, 6374318)
         self.assertEqual(comments[2].level, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()

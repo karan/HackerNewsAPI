@@ -1,7 +1,18 @@
+import sys
+import os
+
 from hn import Story
 import unittest
 
-class TestStoryGetComments(unittest.TestCase):
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
+
+class TestStoryGetComments(RemoteTestCase):
 
     def setUp(self):
         self.story = Story.fromid(7404389)
@@ -12,4 +23,4 @@ class TestStoryGetComments(unittest.TestCase):
     	self.assertTrue(len(comment) >= 5508)
 
 if __name__ == '__main__':
-     unittest.main()
+    unittest.main()

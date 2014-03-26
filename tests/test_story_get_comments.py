@@ -1,10 +1,20 @@
 import unittest
+import sys
+import os
 
 from hn import Story
 from hn import utils
 from random import randrange
 
-class TestStoryGetComments(unittest.TestCase):
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
+
+class TestStoryGetComments(RemoteTestCase):
 
     def setUp(self):
         self.story = Story.fromid(7324236)
@@ -40,3 +50,7 @@ class TestStoryGetComments(unittest.TestCase):
         comment = comments[randrange(0, len(comments))]
         self.assertTrue(bool(comment.body))
         self.assertTrue(bool(comment.body_html))
+
+
+if __name__ == '__main__':
+    unittest.main()

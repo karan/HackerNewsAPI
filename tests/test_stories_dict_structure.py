@@ -1,11 +1,18 @@
-
 import sys
+import os
 import unittest
 
 from hn import HN
 
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
 
-class TestStoriesDict(unittest.TestCase):
+class TestStoriesDict(RemoteTestCase):
     
     def setUp(self):
         # check py version
@@ -101,3 +108,7 @@ class TestStoriesDict(unittest.TestCase):
         Checks if the dict returned by scraping the newest page of HN is 30.
         """
         self.assertEqual(len(self.newest_stories), 30)
+
+
+if __name__ == '__main__':
+    unittest.main()

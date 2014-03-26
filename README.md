@@ -140,6 +140,9 @@ To run individual tests,
 
     $ python -m unittest tests.<module name>
 
+By default the tests are ran on a local test server with predownloaded original responses. You can activate the remote running option by:
+
+    $ ./runtests.sh remote
 
 Donations
 =============

@@ -2,10 +2,19 @@
 
 import unittest
 import sys
+import os
 
 from hn import HN, Story
 
-class TestStory(unittest.TestCase):
+if sys.version_info >= (3, 0):
+    from urllib.request import urlopen
+    from tests.cases import RemoteTestCase
+    unicode = str
+else:
+    from urllib2 import urlopen
+    from cases import RemoteTestCase
+
+class TestStory(RemoteTestCase):
     
     def setUp(self):
         self.PY2 = sys.version_info[0] == 2
@@ -40,6 +49,7 @@ class TestStory(unittest.TestCase):
         Tests the author name
         """
         self.assertEqual(self.story.submitter, 'karangoeluw')
-        
+
+
 if __name__ == '__main__':
     unittest.main()
