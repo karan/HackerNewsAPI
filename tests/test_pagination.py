@@ -19,11 +19,15 @@ class TestPagination(unittest.TestCase):
             body=get_content('best.html'))
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'newest'), 
             body=get_content('newest.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=WK2fLO5cPAJ9DnZbm8XOFR'), 
+            body=get_content('best2.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'news2'), 
+            body=get_content('news2.html'))
 
         # check py version
         self.PY2 = sys.version_info[0] == 2
         self.hn = HN()
-    
+
     def tearDown(self):
         httpretty.HTTPretty.disable()
     

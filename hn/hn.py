@@ -31,7 +31,7 @@ class HN(object):
         """
         table = soup.findChildren('table')[2] # the table with all submissions
         # the last row of the table contains the relative url of the next page
-        return table.findChildren(['tr'])[-1].find('a').get('href').lstrip('//')
+        return table.findChildren(['tr'])[-1].find('a').get('href').replace(BASE_URL, '').lstrip('//')
 
     def _get_zipped_rows(self, soup):
         """
@@ -209,7 +209,7 @@ class Story(object):
         # the last row of the table contains the relative url of the next page
         anchor = table.findChildren(['tr'])[-1].find('a')
         if anchor and anchor.text == u'More':
-            return anchor.get('href').lstrip('//')
+            return anchor.get('href').lstrip(BASE_URL)
         else:
             return None
 
