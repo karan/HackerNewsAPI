@@ -22,7 +22,8 @@ class TestStory(RemoteTestCase):
             self.text_type = [str]
         else:
             self.text_type = [unicode, str]
-        self.story = Story.fromid(6115341) # https://news.ycombinator.com/item?id=6115341
+        # https://news.ycombinator.com/item?id=6115341
+        self.story = Story.fromid(6115341)
     
     def tearDown(self):
         pass
