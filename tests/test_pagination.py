@@ -66,33 +66,33 @@ class TestPagination(unittest.TestCase):
             rows = [row for row in rows]
             self.assertEqual(len(rows), 30)
     
-    # def test_pagination_top_for_0_limit(self):
-    #     """
-    #     Checks if the pagination works for 0 limit.
-    #     """
-    #     stories = [story for story in self.hn.get_stories(limit=0)]
-    #     self.assertEqual(len(stories), 30)
+    def test_pagination_top_for_0_limit(self):
+        """
+        Checks if the pagination works for 0 limit.
+        """
+        stories = [story for story in self.hn.get_stories(limit=0)]
+        self.assertEqual(len(stories), 30)
     
-    # def test_pagination_top_for_2_pages(self):
-    #     """
-    #     Checks if the pagination works for the front page.
-    #     """
-    #     stories = [story for story in self.hn.get_stories(limit=2*30)]
-    #     self.assertEqual(len(stories), 2 * 30)
+    def test_pagination_top_for_2_pages(self):
+        """
+        Checks if the pagination works for the front page.
+        """
+        stories = [story for story in self.hn.get_stories(limit=2*30)]
+        self.assertEqual(len(stories), 2 * 30)
     
-    # def test_pagination_newest_for_3_pages(self):
-    #     """
-    #     Checks if the pagination works for the newest page.
-    #     """
-    #     stories = [story for story in self.hn.get_stories(story_type='newest', limit=3*30)]
-    #     self.assertEqual(len(stories), 3 * 30)
+    def test_pagination_newest_for_3_pages(self):
+        """
+        Checks if the pagination works for the newest page.
+        """
+        stories = [story for story in self.hn.get_stories(story_type='newest', limit=3*30)]
+        self.assertEqual(len(stories), 3 * 30)
         
-    # def test_pagination_best_for_2_pages(self):
-    #     """
-    #     Checks if the pagination works for the best page.
-    #     """
-    #     stories = [story for story in self.hn.get_stories(story_type='best', limit=2*30)]
-    #     self.assertEqual(len(stories), 2 * 30)
+    def test_pagination_best_for_2_pages(self):
+        """
+        Checks if the pagination works for the best page.
+        """
+        stories = [story for story in self.hn.get_stories(story_type='best', limit=2*30)]
+        self.assertEqual(len(stories), 2 * 30)
 
 
 if __name__ == '__main__':

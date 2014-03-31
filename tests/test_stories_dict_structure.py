@@ -1,34 +1,39 @@
-import sys
-import os
 import unittest
+from os import path
+import sys
 
-from hn import HN
+from hn import HN, Story
+from hn import utils, constants
 
-if sys.version_info >= (3, 0):
-    from urllib.request import urlopen
-    from tests.cases import RemoteTestCase
-    unicode = str
-else:
-    from urllib2 import urlopen
-    from cases import RemoteTestCase
+from test_utils import get_content, PRESETS_DIR
 
-class TestStoriesDict(RemoteTestCase):
+import httpretty
+
+class TestStoriesDict(unittest.TestCase):
     
     def setUp(self):
+        httpretty.HTTPretty.enable()
+        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
+            body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'best'), 
+            body=get_content('best.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'newest'), 
+            body=get_content('newest.html'))
+
         # check py version
         PY2 = sys.version_info[0] == 2
         if not PY2:
             self.text_type = [str]
         else:
             self.text_type = [unicode, str]
-        
+
         self.hn = HN()
         self.top_stories = [story for story in self.hn.get_stories()]
         self.newest_stories = [story for story in self.hn.get_stories(story_type='newest')]
         self.best_stories = [story for story in self.hn.get_stories(story_type='best')]
     
     def tearDown(self):
-        pass
+        httpretty.HTTPretty.disable()
     
     
     def test_stories_dict_structure_top(self):
