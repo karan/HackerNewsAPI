@@ -1,22 +1,21 @@
-#!/usr/bin/env python
-
 import unittest
+from os import path
 import sys
-import os
 
 from hn import HN, Story
+from hn import utils, constants
 
-if sys.version_info >= (3, 0):
-    from urllib.request import urlopen
-    from tests.cases import RemoteTestCase
-    unicode = str
-else:
-    from urllib2 import urlopen
-    from cases import RemoteTestCase
+from test_utils import get_content, PRESETS_DIR
 
-class TestStory(RemoteTestCase):
+import httpretty
+
+class TestStory(unittest.TestCase):
     
     def setUp(self):
+        httpretty.HTTPretty.enable()
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=6115341'), 
+            body=get_content('6115341.html'))
+
         self.PY2 = sys.version_info[0] == 2
         if not self.PY2:
             self.text_type = [str]
@@ -26,7 +25,7 @@ class TestStory(RemoteTestCase):
         self.story = Story.fromid(6115341)
     
     def tearDown(self):
-        pass
+        httpretty.HTTPretty.disable()
     
     def test_story_data_types(self):
         """

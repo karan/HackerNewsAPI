@@ -67,7 +67,7 @@ class HN(object):
 
             is_self = False # by default all stories are linking posts
 
-            if link.find('http') is -1 : # the link doesn't contains "http" meaning an internal link
+            if link.find(BASE_URL) is -1 : # the link doesn't contains "http" meaning an internal link
                 link = '%s/%s' % (BASE_URL, link)
                 domain = BASE_URL
                 is_self = True

@@ -1,16 +1,11 @@
 import unittest
-from os import path
 
 from hn import HN, Story
 from hn import utils, constants
 
+from test_utils import get_content, PRESETS_DIR
+
 import httpretty
-
-PRESETS_DIR = path.join(path.dirname(__file__), 'presets')
-
-def get_content(file):
-    with open(path.join(PRESETS_DIR, file)) as f:
-        return f.read()
 
 class TestGetLeaders(unittest.TestCase):
 
@@ -27,7 +22,6 @@ class TestGetLeaders(unittest.TestCase):
 
 	def test_get_leaders_with_no_parameter(self):
 		result = [leader for leader in self.hn.get_leaders()]
-		print result
 		self.assertEqual(len(result), 10)
 
 	def test_get_leaders_with_parameter(self):
