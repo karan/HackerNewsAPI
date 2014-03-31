@@ -1,26 +1,27 @@
 import unittest
+from os import path
 import sys
-import os
-
-from hn import Story
-from hn import utils
 from random import randrange
 
-if sys.version_info >= (3, 0):
-    from urllib.request import urlopen
-    from tests.cases import RemoteTestCase
-    unicode = str
-else:
-    from urllib2 import urlopen
-    from cases import RemoteTestCase
+from hn import HN, Story
+from hn import utils, constants
 
-class TestStoryGetComments(RemoteTestCase):
+from test_utils import get_content, PRESETS_DIR
+
+import httpretty
+
+class TestStoryGetComments(unittest.TestCase):
 
     def setUp(self):
+        httpretty.HTTPretty.enable()
+        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
+            body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7324236'), 
+            body=get_content('6374031.html'))
         self.story = Story.fromid(7324236)
 
     def tearDown(self):
-        pass
+        httpretty.HTTPretty.disable()
 
     def test_get_comments_len(self):
         """
@@ -29,6 +30,7 @@ class TestStoryGetComments(RemoteTestCase):
         """
         comments = self.story.get_comments()
         soup = utils.get_item_soup(7324236)
+        more_button_present = False
         for anchor in soup.find_all('a'):
             if 'More' in anchor.text:
                 more_button_present = True
