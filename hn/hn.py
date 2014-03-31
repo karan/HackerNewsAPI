@@ -252,12 +252,16 @@ class Story(object):
                     if str(spans[0]) != '<span class="comhead"></span>':
                         user = spans[0].contents[0].string # user who submitted the comment
                         time_ago = spans[0].contents[1].string.strip().rstrip(' |') # relative time of comment
-                        comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
+                        try:
+                            comment_id = int(re.match(r'item\?id=(.*)', spans[0].contents[2].get('href')).groups()[0])
+                        except AttributeError:
+                            comment_id = int(re.match(r'%s/item\?id=(.*)' % BASE_URL, spans[0].contents[2].get('href')).groups()[0])
 
                         body = spans[1].text # text representation of comment (unformatted)
                         # html of comment, may not be valid
-                        pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
+                        pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font>')
                         body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+
                     else:
                         # comment deleted
                         user = ''

@@ -1,28 +1,30 @@
 import unittest
+from os import path
 import sys
-import os
 
 from hn import HN, Story
-from hn import utils
+from hn import utils, constants
 
-if sys.version_info >= (3, 0):
-    from urllib.request import urlopen
-    from tests.cases import RemoteTestCase
-    unicode = str
-else:
-    from urllib2 import urlopen
-    from cases import RemoteTestCase
+from test_utils import get_content, PRESETS_DIR
 
-class TestStoryFromId(RemoteTestCase):
+import httpretty
+
+class TestStoryFromId(unittest.TestCase):
 
     def setUp(self):
+        httpretty.HTTPretty.enable()
+        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
+            body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=6374031'), 
+            body=get_content('6374031.html'))
+
         # check py version
         self.PY2 = sys.version_info[0] == 2
         self.hn = HN()
         self.story = Story.fromid(6374031)
 
     def tearDown(self):
-        pass
+        httpretty.HTTPretty.disable()
 
     def test_from_id_constructor(self):
         """
