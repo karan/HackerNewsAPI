@@ -18,8 +18,14 @@ class TestStoryGetComments(unittest.TestCase):
             body=get_content('index.html'))
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7324236'), 
             body=get_content('7324236.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=17j3OyQxyCa85PZWonPdEd'), 
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=0MonpGsCkcGbA7rcbd2BAP'), 
             body=get_content('7324236-2.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=jyhCSQtM6ymFazFplS4Gpf'), 
+            body=get_content('7324236-3.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=s3NA4qB6zMT3KHVk1x2MTG'), 
+            body=get_content('7324236-4.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=pFxm5XBkeLtmphVejNZWlo'), 
+            body=get_content('7324236-5.html'))
 
         self.story = Story.fromid(7324236)
 
@@ -45,6 +51,7 @@ class TestStoryGetComments(unittest.TestCase):
         if more_button_present:
             self.assertTrue(len(comments) > 90)
         else:
+            print comments, len(comments)
             self.assertTrue(len(comments) < 110)
 
     def test_comment_not_null(self):

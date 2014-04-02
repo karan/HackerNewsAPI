@@ -290,10 +290,6 @@ class Story(object):
             soup = get_soup(page=next_page_url)
             current_page += 1
 
-        # comments = [comments[-5:] if comment[-2:]=='--' else comment for comment in comments]
-        # for comment in comments:
-        #     if str[-5:] == '-----':
-        #         comment.
         # previous_comment = None
         # for comment in comments:
         #     if comment.level == 0:
