@@ -19,8 +19,6 @@ class TestStoryGetComments(unittest.TestCase):
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7404389'), 
             body=get_content('7404389.html'))
         self.story = Story.fromid(7404389)
-
-        self.story = Story.fromid(7404389)
         self.comments = self.story.get_comments()
 
     def tearDown(self):
@@ -28,7 +26,6 @@ class TestStoryGetComments(unittest.TestCase):
 
     def test_get_nested_comments(self):
     	comment = self.comments[0].body
-        print comment
     	self.assertTrue(len(comment) == 5712)
 
 if __name__ == '__main__':

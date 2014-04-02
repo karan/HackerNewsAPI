@@ -258,9 +258,14 @@ class Story(object):
                             comment_id = int(re.match(r'%s/item\?id=(.*)' % BASE_URL, spans[0].contents[2].get('href')).groups()[0])
 
                         body = spans[1].text # text representation of comment (unformatted)
+                        
                         # html of comment, may not be valid
-                        pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font>')
-                        body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+                        try:
+                            pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
+                            body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
+                        except AttributeError:
+                            pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></p><p><font size="1">')
+                            body_html = re.match(pat, str(spans[1]).replace('\n', '')).groups()[0]
 
                     else:
                         # comment deleted
