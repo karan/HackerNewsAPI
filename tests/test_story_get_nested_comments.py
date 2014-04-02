@@ -26,7 +26,8 @@ class TestStoryGetComments(unittest.TestCase):
 
     def test_get_nested_comments(self):
     	comment = self.comments[0].body
-    	self.assertTrue(len(comment) == 5712)
+        print comment
+    	self.assertEqual(comment.index("That's a genius use of that offering"), 0)
 
 if __name__ == '__main__':
     unittest.main()

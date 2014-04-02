@@ -259,6 +259,9 @@ class Story(object):
 
                         body = spans[1].text # text representation of comment (unformatted)
                         
+                        if body[-2:] == '--':
+                            body = body[:-5]
+
                         # html of comment, may not be valid
                         try:
                             pat = re.compile(r'<span class="comment"><font color=".*">(.*)</font></span>')
@@ -287,14 +290,18 @@ class Story(object):
             soup = get_soup(page=next_page_url)
             current_page += 1
 
-        previous_comment = None
-        for comment in comments:
-            if comment.level == 0:
-                previous_comment = comment
-            else:
-                level_difference = comment.level - previous_comment.level
-                previous_comment.body_html += '\n' + '\t' * level_difference + comment.body_html
-                previous_comment.body += '\n' + '\t' * level_difference + comment.body         
+        # comments = [comments[-5:] if comment[-2:]=='--' else comment for comment in comments]
+        # for comment in comments:
+        #     if str[-5:] == '-----':
+        #         comment.
+        # previous_comment = None
+        # for comment in comments:
+        #     if comment.level == 0:
+        #         previous_comment = comment
+        #     else:
+        #         level_difference = comment.level - previous_comment.level
+        #         previous_comment.body_html += '\n' + '\t' * level_difference + comment.body_html
+        #         previous_comment.body += '\n' + '\t' * level_difference + comment.body         
         return comments
     
     @classmethod
