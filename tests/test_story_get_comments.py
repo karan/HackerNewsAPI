@@ -17,7 +17,10 @@ class TestStoryGetComments(unittest.TestCase):
         httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
             body=get_content('index.html'))
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7324236'), 
-            body=get_content('6374031.html'))
+            body=get_content('7324236.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=17j3OyQxyCa85PZWonPdEd'), 
+            body=get_content('7324236-2.html'))
+
         self.story = Story.fromid(7324236)
 
     def tearDown(self):

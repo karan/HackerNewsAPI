@@ -18,6 +18,7 @@ class TestStoryGetComments(unittest.TestCase):
             body=get_content('index.html'))
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7404389'), 
             body=get_content('7404389.html'))
+
         self.story = Story.fromid(7404389)
         self.comments = self.story.get_comments()
 
@@ -26,7 +27,7 @@ class TestStoryGetComments(unittest.TestCase):
 
     def test_get_nested_comments(self):
     	comment = self.comments[0].body
-        print comment
+        print self.comments
     	self.assertEqual(comment.index("That's a genius use of that offering"), 0)
 
 if __name__ == '__main__':
