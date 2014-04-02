@@ -27,7 +27,8 @@ class TestStoryGetComments(unittest.TestCase):
         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=pFxm5XBkeLtmphVejNZWlo'), 
             body=get_content('7324236-5.html'))
 
-        self.story = Story.fromid(7324236)
+        story = Story.fromid(7324236)
+        self.comments = story.get_comments()
 
     def tearDown(self):
         httpretty.HTTPretty.disable()
@@ -37,32 +38,23 @@ class TestStoryGetComments(unittest.TestCase):
         Tests whether or not len(get_comments) > 90 if there are multiple pages
         of comments.
         """
-        comments = self.story.get_comments()
-        soup = utils.get_item_soup(7324236)
-        more_button_present = False
-        for anchor in soup.find_all('a'):
-            if 'More' in anchor.text:
-                more_button_present = True
-
         # Note: Hacker News is not consistent about the number of comments per
         # page. On multiple comment page stories, the number of comments on a
         # page is never less than 90. On single comment page stories, the
         # number of comments on the sole page is always less than 110.
-        if more_button_present:
-            self.assertTrue(len(comments) > 90)
-        else:
-            print comments, len(comments)
-            self.assertTrue(len(comments) < 110)
+        self.assertTrue(len(self.comments) > 90)
 
     def test_comment_not_null(self):
         """
         Tests for null comments.
         """
-        comments = self.story.get_comments()
-        comment = comments[randrange(0, len(comments))]
+        comment = self.comments[randrange(0, len(self.comments))]
         self.assertTrue(bool(comment.body))
         self.assertTrue(bool(comment.body_html))
 
+    def test_get_nested_comments(self):
+        comment = self.comments[0].body
+        self.assertEqual(comment.index("Healthcare.gov"), 0)
 
 if __name__ == '__main__':
     unittest.main()
