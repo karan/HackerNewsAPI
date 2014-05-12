@@ -5,17 +5,19 @@ except ImportError:
 from os import path
 
 
-def get_version():
-    basedir = path.dirname(__file__)
-    with open(path.join(basedir, 'hn/version.py')) as f:
-        locals = {}
-        exec(f.read(), locals)
-        return locals['VERSION']
-    raise RuntimeError('No version info found.')
+# def get_version():
+#     basedir = path.dirname(__file__)
+#     with open(path.join(basedir, 'hn/version.py')) as f:
+#         locals = {}
+#         exec(f.read(), locals)
+#         return locals['VERSION']
+#     raise RuntimeError('No version info found.')
+
+version = 0.0.1
 
 setup(
     name='HackerNews',
-    version=get_version(),
+    version=version,
     install_requires=['BeautifulSoup4>=4.3.1', 'requests'],
     author='Karan Goel',
     author_email='karan@goel.im',
