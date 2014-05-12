@@ -11,7 +11,7 @@ Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 Features
 ============
 
-- Compatible with Python 2 (2.7+) and Python 3 (3.3+)
+- Compatible with Python 2 (2.7+).
 - Supports 'top', 'news2','newest' and 'best' posts
 - Retrieve comments from posts (flat list for now) (`story.get_comments()`)
 - Pagination support for comments
