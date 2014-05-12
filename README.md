@@ -12,9 +12,9 @@ Features
 ============
 
 - Compatible with Python 2 (2.7+) and Python 3 (3.3+)
-- Supports 'top', 'newest' and 'best' posts
+- Supports 'top', 'news2','newest' and 'best' posts
 - Retrieve comments from posts (flat list for now) (`story.get_comments()`)
-- Pagination support
+- Pagination support for comments
 - Handles external posts, self posts and job posts
 - Get post details for any post (`Story.fromid(7024626)`)
 
@@ -53,8 +53,8 @@ API Reference
 
 | Name | Type | Required | Description | Default |
 | ---- | ---- | -------- | ----------- | ------- |
-| `story_type` | string | No | Returns the stories from this page. One of `''`, `'newest'`, `'best'` | `''` (top) |
-| `limit` | integer | No | Return only at most these many stories, at least 30 | 30 |
+| `story_type` | string | No | Returns the stories from this page. One of ``, `news2`, `newest`, `best` | `` (top) |
+| `limit` | integer | No | Number of stories required from the given page. Cannot be more than 30. | 30 |
 
 **Example:**
 
