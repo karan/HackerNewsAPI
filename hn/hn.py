@@ -24,14 +24,14 @@ class HN(object):
     def __init__(self):
         self.more = ''
 
-    def _get_next_page(self, soup):
-        """
-        Get the relative url of the next page (The "More" link at
-        the bottom of the page)
-        """
-        table = soup.findChildren('table')[2] # the table with all submissions
-        # the last row of the table contains the relative url of the next page
-        return table.findChildren(['tr'])[-1].find('a').get('href').replace(BASE_URL, '').lstrip('//')
+    # def _get_next_page(self, soup):
+    #     """
+    #     Get the relative url of the next page (The "More" link at
+    #     the bottom of the page)
+    #     """
+    #     table = soup.findChildren('table')[2] # the table with all submissions
+    #     # the last row of the table contains the relative url of the next page
+    #     return table.findChildren(['tr'])[-1].find('a').get('href').replace(BASE_URL, '').lstrip('//')
 
     def _get_zipped_rows(self, soup):
         """
@@ -126,22 +126,24 @@ class HN(object):
         of HN.
         'story_type' can be:
         \t'' = top stories (homepage) (default)
+        \t'news2' = page 2 of top stories
         \t'newest' = most recent stories
         \t'best' = best stories
 
-        'limit' is the number of stories required. Defaults to 30
+        'limit' is the number of stories required from the given page.
+        Defaults to 30. Cannot be more than 30.
         """
-        if limit == None or limit < 30:
+        if limit == None or limit < 1 or limit > 30:
             limit = 30 # we need at least 30 items
 
         stories_found = 0
-        self.more = story_type
+        # self.more = story_type
         # while we still have more stories to find
         while stories_found < limit:
-            soup = get_soup(page=self.more) # get current page soup
+            soup = get_soup(page=story_type) # get current page soup
             all_rows = self._get_zipped_rows(soup)
             stories = self._build_story(all_rows) # get a list of stories on current page
-            self.more = self._get_next_page(soup) # move to next page
+            # self.more = self._get_next_page(soup) # move to next page
 
             for story in stories:
                 yield story
