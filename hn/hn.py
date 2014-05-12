@@ -67,7 +67,7 @@ class HN(object):
 
             is_self = False # by default all stories are linking posts
 
-            if link.find(BASE_URL) is -1 : # the link doesn't contains "http" meaning an internal link
+            if link.find('item?id=') is -1: # the link doesn't contains "http" meaning an internal link
                 domain = info_cells[2].find('span').string[2:-2] # slice " (abc.com) "
             else:
                 link = '%s/%s' % (BASE_URL, link)
