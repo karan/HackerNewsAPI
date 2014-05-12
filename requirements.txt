@@ -1,3 +1,4 @@
 beautifulsoup4==4.3.1
 coverage==3.7.1
 requests==2.0.1
+httpretty
