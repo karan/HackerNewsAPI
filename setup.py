@@ -13,7 +13,7 @@ from os import path
 #         return locals['VERSION']
 #     raise RuntimeError('No version info found.')
 
-version = 0.0.1
+version = '0.0.1'
 
 setup(
     name='HackerNews',
