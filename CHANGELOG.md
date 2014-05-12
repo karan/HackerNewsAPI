@@ -1,3 +1,11 @@
+## v2.0.0 (May 12, 2014)
+
+- Remove: Pagination
+- Remove: Python 3 support
+- Add: Local preset tests
+- Add: Many new end-points (See documentation)
+- Fix: Several bug fixes
+
 ## v1.8.2 (Jan 31, 2014)
 
 - New: Build stories from id (`Story.fromid(6115341)`)

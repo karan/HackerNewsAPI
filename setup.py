@@ -3,7 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = '0.0.1'
+version = '2.0.0'
 
 setup(
     name='HackerNews',

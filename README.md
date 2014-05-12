@@ -62,6 +62,22 @@ API Reference
 	hn = HN()
 	hn.get_stories(story_type='newest', limit=10)
 
+#### `get_leaders`
+
+**Parameters:**
+
+| Name | Type | Required | Description | Default |
+| ---- | ---- | -------- | ----------- | ------- |
+| `limit` | integer | No | Number of top leaders to return | 10 |
+
+**Example:**
+
+    from hn import HN
+    hn = HN()
+
+    # get top 20 users of HN
+    hn.get_leaders(limit=20)
+
 ## Class: `Story`
 
 Each `Story` has the following properties
@@ -121,6 +137,15 @@ Each `Comment` has the following properties
 - **time_ago** - time when it was submitted
 - **body** - text representation of comment (unformatted)
 - **body_html** - html of comment, may not be valid
+
+## Class: `User`
+
+Each `User` has the following properties
+
+- **username** - user's profile name
+- **date_created** - when the profile was created
+- **karma** - user's e-points
+- **avg** - user's average karma per day
 
 Examples
 ========
