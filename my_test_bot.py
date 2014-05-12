@@ -4,28 +4,28 @@ from hn import HN, Story
 
 hn = HN()
 
-# top_iter = hn.get_stories(limit=30) # a generator over 30 stories from top page
+top_iter = hn.get_stories(limit=30) # a generator over 30 stories from top page
 
 
-# # print top stories from homepage
-# for story in top_iter:
-#     print(story.title)
-#     #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
+# print top stories from homepage
+for story in top_iter:
+    print(story.title)
+    #print('[{0}] "{1}" by {2}'.format(story.points, story.title, story.submitter))
 
 
-# # print 10 latest stories
-# for story in hn.get_stories(story_type='newest', limit=10):
-#     story.title
-#     print('*' * 50)
-#     print('')
+# print 10 latest stories
+for story in hn.get_stories(story_type='newest', limit=10):
+    story.title
+    print('*' * 50)
+    print('')
 
 
-# # for each story on front page, print top comment
-# for story in hn.get_stories():
-#     print(story.title)
-#     comments = story.get_comments()
-#     print(comments[0] if len(comments) > 0 else None)
-#     print('*' * 10)
+# for each story on front page, print top comment
+for story in hn.get_stories():
+    print(story.title)
+    comments = story.get_comments()
+    print(comments[0] if len(comments) > 0 else None)
+    print('*' * 10)
 
 
 
