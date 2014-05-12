@@ -13,6 +13,3 @@ after_success:
     - coveralls
 notifications:
   email: false
-branches:
-  only:
-    - master
