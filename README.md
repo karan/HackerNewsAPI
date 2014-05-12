@@ -53,7 +53,7 @@ API Reference
 
 | Name | Type | Required | Description | Default |
 | ---- | ---- | -------- | ----------- | ------- |
-| `story_type` | string | No | Returns the stories from this page. One of ``, `news2`, `newest`, `best` | `` (top) |
+| `story_type` | string | No | Returns the stories from this page. One of `(empty string)`, `news2`, `newest`, `best` | `(empty string)` (top) |
 | `limit` | integer | No | Number of stories required from the given page. Cannot be more than 30. | 30 |
 
 **Example:**
