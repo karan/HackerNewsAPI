@@ -9,12 +9,14 @@ from test_utils import get_content, PRESETS_DIR
 
 import httpretty
 
+
 class TestStory(unittest.TestCase):
-    
+
     def setUp(self):
         httpretty.HTTPretty.enable()
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=6115341'), 
-            body=get_content('6115341.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+                                                         'item?id=6115341'),
+                               body=get_content('6115341.html'))
 
         self.PY2 = sys.version_info[0] == 2
         if not self.PY2:
@@ -23,10 +25,10 @@ class TestStory(unittest.TestCase):
             self.text_type = [unicode, str]
         # https://news.ycombinator.com/item?id=6115341
         self.story = Story.fromid(6115341)
-    
+
     def tearDown(self):
         httpretty.HTTPretty.disable()
-    
+
     def test_story_data_types(self):
         """
         Test types of fields of a Story object
@@ -43,7 +45,7 @@ class TestStory(unittest.TestCase):
         assert type(self.story.num_comments) == int
         assert type(self.story.comments_link) in self.text_type
         assert type(self.story.is_self) == bool
-    
+
     def test_story_submitter(self):
         """
         Tests the author name

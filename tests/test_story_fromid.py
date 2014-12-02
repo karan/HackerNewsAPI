@@ -9,14 +9,17 @@ from test_utils import get_content, PRESETS_DIR
 
 import httpretty
 
+
 class TestStoryFromId(unittest.TestCase):
 
     def setUp(self):
         httpretty.HTTPretty.enable()
-        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
-            body=get_content('index.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=6115341'), 
-            body=get_content('6115341.html'))
+        httpretty.register_uri(httpretty.GET,
+                               'https://news.ycombinator.com/',
+                               body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+                                                         'item?id=6115341'),
+                               body=get_content('6115341.html'))
 
         # check py version
         self.PY2 = sys.version_info[0] == 2

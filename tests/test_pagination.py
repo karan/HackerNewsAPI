@@ -11,18 +11,23 @@ import sys
 
 # class TestPagination(unittest.TestCase):
 
-#     def setUp(self):
-#         httpretty.HTTPretty.enable()
-#         httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
-#             body=get_content('index.html'))
-#         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'best'), 
-#             body=get_content('best.html'))
-#         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'newest'), 
-#             body=get_content('newest.html'))
-#         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=WK2fLO5cPAJ9DnZbm8XOFR'), 
-#             body=get_content('best2.html'))
-#         httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'news2'), 
-#             body=get_content('news2.html'))
+    # def setUp(self):
+    #     httpretty.HTTPretty.enable()
+    #     httpretty.register_uri(httpretty.GET,
+    #                            'https://news.ycombinator.com/',
+    #                            body=get_content('index.html'))
+    #     httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+    #                                                      'best'),
+    #                            body=get_content('best.html'))
+    #     httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+    #                                                      'newest'),
+    #                            body=get_content('newest.html'))
+    #     httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+    #                                                      'x?fnid=WK2fLO5cPAJ9DnZbm8XOFR'),
+    #                            body=get_content('best2.html'))
+    #     httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+    #                                                      'news2'),
+    #                            body=get_content('news2.html'))
 
 #         # check py version
 #         self.PY2 = sys.version_info[0] == 2
@@ -30,7 +35,7 @@ import sys
 
 #     def tearDown(self):
 #         httpretty.HTTPretty.disable()
-    
+
 #     # def test_more_link_top(self):
 #     #     """
 #     #     Checks if the "More" link at the bottom of homepage works.
@@ -39,7 +44,7 @@ import sys
 #     #     fnid = self.hn._get_next_page(soup)[-5:]
 #     #     expected = 'news2'
 #     #     self.assertEqual(len(fnid), len(expected))
-        
+
 #     # def test_more_link_best(self):
 #     #     """
 #     #     Checks if the "More" link at the bottom of best page works.
@@ -48,7 +53,7 @@ import sys
 #     #     fnid = self.hn._get_next_page(soup)[-29:]
 #     #     expected = 'x?fnid=te9bsVN2BAx0XOpRmUjcY4'
 #     #     self.assertEqual(len(fnid), len(expected))
-        
+
 #     # def test_more_link_newest(self):
 #     #     """
 #     #     Checks if the "More" link at the bottom of newest page works.
@@ -57,7 +62,7 @@ import sys
 #     #     fnid = self.hn._get_next_page(soup)[-29:]
 #     #     expected = 'x?fnid=te9bsVN2BAx0XOpRmUjcY4'
 #     #     self.assertEqual(len(fnid), len(expected))
-    
+
 #     def test_get_zipped_rows(self):
 #         """
 #         Tests HN._get_zipped_rows for best page.
@@ -69,28 +74,28 @@ import sys
 #         else:
 #             rows = [row for row in rows]
 #             self.assertEqual(len(rows), 30)
-    
+
 #     def test_pagination_top_for_0_limit(self):
 #         """
 #         Checks if the pagination works for 0 limit.
 #         """
 #         stories = [story for story in self.hn.get_stories(limit=0)]
 #         self.assertEqual(len(stories), 30)
-    
+
 #     def test_pagination_top_for_2_pages(self):
 #         """
 #         Checks if the pagination works for the front page.
 #         """
 #         stories = [story for story in self.hn.get_stories(limit=2*30)]
 #         self.assertEqual(len(stories), 2 * 30)
-    
+
 #     def test_pagination_newest_for_3_pages(self):
 #         """
 #         Checks if the pagination works for the newest page.
 #         """
 #         stories = [story for story in self.hn.get_stories(story_type='newest', limit=3*30)]
 #         self.assertEqual(len(stories), 3 * 30)
-        
+
 #     def test_pagination_best_for_2_pages(self):
 #         """
 #         Checks if the pagination works for the best page.
