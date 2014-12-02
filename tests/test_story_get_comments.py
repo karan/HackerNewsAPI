@@ -10,21 +10,32 @@ from test_utils import get_content, PRESETS_DIR
 
 import httpretty
 
+
 class TestStoryGetComments(unittest.TestCase):
 
     def setUp(self):
         httpretty.HTTPretty.enable()
-        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
-            body=get_content('index.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'item?id=7324236'), 
+        httpretty.register_uri(httpretty.GET,
+                               'https://news.ycombinator.com/',
+                               body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+                                                         'item?id=7324236'),
             body=get_content('7324236.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=0MonpGsCkcGbA7rcbd2BAP'), 
+        httpretty.register_uri(httpretty.GET,
+                               '%s/%s' % (constants.BASE_URL,
+                                          'x?fnid=0MonpGsCkcGbA7rcbd2BAP'),
             body=get_content('7324236-2.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=jyhCSQtM6ymFazFplS4Gpf'), 
+        httpretty.register_uri(httpretty.GET,
+                               '%s/%s' % (constants.BASE_URL,
+                                          'x?fnid=jyhCSQtM6ymFazFplS4Gpf'),
             body=get_content('7324236-3.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=s3NA4qB6zMT3KHVk1x2MTG'), 
+        httpretty.register_uri(httpretty.GET,
+                               '%s/%s' % (constants.BASE_URL,
+                                          'x?fnid=s3NA4qB6zMT3KHVk1x2MTG'),
             body=get_content('7324236-4.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'x?fnid=pFxm5XBkeLtmphVejNZWlo'), 
+        httpretty.register_uri(httpretty.GET,
+                               '%s/%s' % (constants.BASE_URL,
+                                          'x?fnid=pFxm5XBkeLtmphVejNZWlo'),
             body=get_content('7324236-5.html'))
 
         story = Story.fromid(7324236)

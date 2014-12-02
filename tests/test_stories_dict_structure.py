@@ -9,16 +9,20 @@ from test_utils import get_content, PRESETS_DIR
 
 import httpretty
 
+
 class TestStoriesDict(unittest.TestCase):
-    
+
     def setUp(self):
         httpretty.HTTPretty.enable()
-        httpretty.register_uri(httpretty.GET, 'https://news.ycombinator.com/', 
-            body=get_content('index.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'best'), 
-            body=get_content('best.html'))
-        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL, 'newest'), 
-            body=get_content('newest.html'))
+        httpretty.register_uri(httpretty.GET,
+                               'https://news.ycombinator.com/',
+                               body=get_content('index.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+                                                         'best'),
+                               body=get_content('best.html'))
+        httpretty.register_uri(httpretty.GET, '%s/%s' % (constants.BASE_URL,
+                                                         'newest'),
+                               body=get_content('newest.html'))
 
         # check py version
         PY2 = sys.version_info[0] == 2
@@ -29,13 +33,14 @@ class TestStoriesDict(unittest.TestCase):
 
         self.hn = HN()
         self.top_stories = [story for story in self.hn.get_stories()]
-        self.newest_stories = [story for story in self.hn.get_stories(story_type='newest')]
-        self.best_stories = [story for story in self.hn.get_stories(story_type='best')]
-    
+        self.newest_stories = [story for story in self.hn.get_stories(
+            story_type='newest')]
+        self.best_stories = [story for story in self.hn.get_stories(
+            story_type='best')]
+
     def tearDown(self):
         httpretty.HTTPretty.disable()
-    
-    
+
     def test_stories_dict_structure_top(self):
         """
         Checks data type of each field of each story from front page.
@@ -55,7 +60,7 @@ class TestStoriesDict(unittest.TestCase):
             assert type(story.num_comments) == int
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
-    
+
     def test_stories_dict_structure_newest(self):
         """
         Checks data type of each field of each story from newest page
@@ -75,7 +80,7 @@ class TestStoriesDict(unittest.TestCase):
             assert type(story.num_comments) == int
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
-    
+
     def test_stories_dict_structure_best(self):
         """
         Checks data type of each field of each story from best page
@@ -95,19 +100,19 @@ class TestStoriesDict(unittest.TestCase):
             assert type(story.num_comments) == int
             assert type(story.comments_link) in self.text_type
             assert type(story.is_self) == bool
-    
+
     def test_stories_dict_length_top(self):
         """
         Checks if the dict returned by scraping the front page of HN is 30.
         """
         self.assertEqual(len(self.top_stories), 30)
-    
+
     def test_stories_dict_length_best(self):
         """
         Checks if the dict returned by scraping the best page of HN is 30.
         """
         self.assertEqual(len(self.best_stories), 30)
-        
+
     def test_stories_dict_length_top_newest(self):
         """
         Checks if the dict returned by scraping the newest page of HN is 30.

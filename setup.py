@@ -16,7 +16,8 @@ setup(
     url='https://github.com/karan/HackerNewsAPI/',
     license='MIT License',
     description='Python API for Hacker News.',
-    long_description='Unofficial Python API for Hacker News. Usage: https://github.com/karan/HackerNewsAPI.',
+    long_description='Unofficial Python API for Hacker News. Usage: '
+                     'https://github.com/karan/HackerNewsAPI.',
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
