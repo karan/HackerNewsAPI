@@ -9,7 +9,7 @@ Unofficial Python API for [Hacker News](https://news.ycombinator.com/).
 
 
 Features
-============
+========
 
 - Compatible with Python 2 (2.7+).
 - Supports 'top', 'news2','newest' and 'best' posts
@@ -20,13 +20,13 @@ Features
 
 
 Installation
-============
+========
 
     $ pip install HackerNews
 
 
 Usage
-==========
+========
 
 **NOTE:** Do not make a lot of requests in a short period of time. HN has it's own throttling system.
 
@@ -41,7 +41,7 @@ Usage
 
 
 API Reference
-==============
+========
 
 ## Class: `HN`
 
@@ -86,7 +86,7 @@ Each `Story` has the following properties
 - **story_id** - the story's id
 - **title** - the title of the story
 - **is_self** - true for self/job stories
-- **link** - the url it points to (`''` for self posts)
+- **link** - the URL it points to (`''` for self posts)
 - **domain** - the domain of the link (`''` for self posts)
 - **points** - the points/karma on the story
 - **submitter** - the user who submitted the story (`''` for job posts)
@@ -132,7 +132,7 @@ Each `Story` has the following properties
 Each `Comment` has the following properties
 
 - **comment_id** - the comment's item id
-- **level** - commen's nesting level
+- **level** - comment's nesting level
 - **user** - user's name who submitted the post
 - **time_ago** - time when it was submitted
 - **body** - text representation of comment (unformatted)
@@ -154,7 +154,7 @@ See [`my_test_bot.py`](https://github.com/karan/HackerNewsAPI/blob/master/my_tes
 
 
 Tests
-=====
+========
 
 To run the tests locally just do:
 
@@ -165,10 +165,10 @@ To run individual tests,
 
     $ python -m unittest tests.<module name>
 
-The tests are ran on a local test server with predownloaded original responses.
+The tests are run on a local test server with predownloaded original responses.
 
 Donations
-=============
+========
 
 If HackerNewsAPI has helped you in any way, and you'd like to help the developer, please consider donating.
 
