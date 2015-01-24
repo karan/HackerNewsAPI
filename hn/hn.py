@@ -77,7 +77,7 @@ class HN(object):
             # the link doesn't contains "http" meaning an internal link
             if link.find('item?id=') is -1:
                 # slice " (abc.com) "
-                domain = info_cells[2].find('span').string[2:-2]
+                domain = info_cells[2].findAll('span')[1].string[2:-1]
             else:
                 link = '%s/%s' % (BASE_URL, link)
                 domain = BASE_URL
